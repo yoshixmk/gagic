@@ -1,0 +1,36 @@
+name: ci
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        # os: [windows-latest, macos-latest, ubuntu-latest]
+        os: [windows-latest, ubuntu-latest]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup deno
+        uses: denolib/setup-deno@v2
+        with:
+          deno-version: v1.3.1
+
+      - name: Run tests
+        run: deno test --unstable --allow-read --allow-write --allow-net src
+
+      - name: Build gh-pages
+        run: deno run --unstable --allow-read --allow-write --allow-net mod.ts build
+
+      - name: Deploy gh-pages
+        if: |
+          matrix.os == 'ubuntu-latest' &&
+          github.event_name == 'push' &&
+          github.ref == 'refs/heads/master'
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          cname: pagic.org
