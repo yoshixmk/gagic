@@ -1,4 +1,4 @@
-import { fs, path, colors } from '../../deps.ts';
+import { fs, path, colors } from "../../deps.ts";
 
 // #region Common types
 export type AnyFunction = (...args: any[]) => any;
@@ -39,7 +39,10 @@ export function omit(obj: any, keys: string[]) {
   return result;
 }
 /** Traversal a tree or tree[] */
-export function depthFirstTraversal<T>(tree: Tree<T> | Tree<T>[], callback: AnyFunction) {
+export function depthFirstTraversal<T>(
+  tree: Tree<T> | Tree<T>[],
+  callback: AnyFunction,
+) {
   let remain = Array.isArray(tree) ? [...tree] : [tree];
   while (remain.length > 0) {
     const current = remain.shift()!;
@@ -54,17 +57,17 @@ export function depthFirstTraversal<T>(tree: Tree<T> | Tree<T>[], callback: AnyF
 // #region Log utils
 export const logger = {
   info: (...args: string[]) => {
-    console.log('[Pagic]', ...args);
+    console.log("[Pagic]", ...args);
   },
   warn: (first: string, ...args: string[]) => {
-    console.log(colors.yellow('[Pagic]'), colors.yellow(first), ...args);
+    console.log(colors.yellow("[Pagic]"), colors.yellow(first), ...args);
   },
   error: (first: string, ...args: string[]) => {
-    console.log(colors.red('[Pagic]'), colors.red(first), ...args);
+    console.log(colors.red("[Pagic]"), colors.red(first), ...args);
   },
   success: (first: string, ...args: string[]) => {
-    console.log(colors.green('[Pagic]'), colors.green(first), ...args);
-  }
+    console.log(colors.green("[Pagic]"), colors.green(first), ...args);
+  },
 };
 // #endregion
 
@@ -78,12 +81,12 @@ export function sortByInsert<
     name: string;
     insert?: string;
     index?: number;
-  }
+  },
 >(arr: T[]) {
   let restItems: T[] = [];
   arr.forEach((item, index) => {
     item.index = index;
-    if (typeof item.insert !== 'undefined') {
+    if (typeof item.insert !== "undefined") {
       restItems.push(item);
     }
   });
@@ -93,10 +96,14 @@ export function sortByInsert<
     baseDelta = baseDelta / 2;
     restItems.forEach((item, index) => {
       // before:layout
-      const [insertCond, insertName] = item.insert!.split(':');
-      const delta = insertCond === 'before' ? -baseDelta : insertCond === 'after' ? baseDelta : 0;
+      const [insertCond, insertName] = item.insert!.split(":");
+      const delta = insertCond === "before"
+        ? -baseDelta
+        : insertCond === "after"
+        ? baseDelta
+        : 0;
       const insertItem = arr.find(({ name }) => name === insertName);
-      if (typeof insertItem === 'undefined') {
+      if (typeof insertItem === "undefined") {
         restItems.splice(index, 1);
       } else if (!restItems.includes(insertItem)) {
         item.index = insertItem.index! + delta;
@@ -113,11 +120,11 @@ export function sortByInsert<
 }
 
 export async function getPagicConfigPath() {
-  let pagicConfigPath = path.resolve('pagic.config.tsx');
+  let pagicConfigPath = path.resolve("pagic.config.tsx");
   if (!(await fs.exists(pagicConfigPath))) {
-    pagicConfigPath = path.resolve('pagic.config.ts');
+    pagicConfigPath = path.resolve("pagic.config.ts");
     if (!(await fs.exists(pagicConfigPath))) {
-      throw new Error('pagic.config.ts not exist');
+      throw new Error("pagic.config.ts not exist");
     }
   }
   return pagicConfigPath;

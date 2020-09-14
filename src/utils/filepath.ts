@@ -1,16 +1,16 @@
-import { fs, path } from '../../deps.ts';
+import { fs, path } from "../../deps.ts";
 
-import { PagicConfig } from '../Pagic.ts';
+import type { PagicConfig } from "../Pagic.ts";
 
 /**
  * Get the runtime pagic root path, it should be a file-system-path or a url
  * /User/xcatliu/work/github/pagic or https://deno.land/x/pagic
  */
 export const pagicRootPath = (() => {
-  if (import.meta.url.startsWith('file://')) {
-    return path.resolve(path.fromFileUrl(import.meta.url), '../../../');
+  if (import.meta.url.startsWith("file://")) {
+    return path.resolve(path.fromFileUrl(import.meta.url), "../../../");
   } else {
-    return import.meta.url.replace(/\/src\/utils\/filepath\.ts$/, '');
+    return import.meta.url.replace(/\/src\/utils\/filepath\.ts$/, "");
   }
 })();
 
@@ -41,8 +41,8 @@ export function replaceExt(input: string, replacement: string) {
  * output: foo/index.html
  */
 export function getOutputPath(pagePath: string) {
-  return replaceExt(`/${pagePath}`, '.html')
-    .replace(/\/README\.html$/, '/index.html')
+  return replaceExt(`/${pagePath}`, ".html")
+    .replace(/\/README\.html$/, "/index.html")
     .slice(1);
 }
 /**
@@ -60,21 +60,21 @@ export function replaceLink(link: string) {
     return link;
   }
   if (/\/README\.md(\?|#|$)/.test(`/${link}`)) {
-    return `/${link}`.replace(/\/README\.md(\?|#|$)/, '/index.html$1').slice(1);
+    return `/${link}`.replace(/\/README\.md(\?|#|$)/, "/index.html$1").slice(1);
   }
-  return link.replace(/\.md(\?|#|$)/, '.html$1');
+  return link.replace(/\.md(\?|#|$)/, ".html$1");
 }
 /**
  * input: ('foo/bar/baz.md', ['foo/_layout.tsx', '_layout.tsx'])
  * output: 'foo/_layout.tsx'
  */
 export function findNearestLayoutPath(pagePath: string, layoutPaths: string[]) {
-  let layoutPath = `/${pagePath}`.replace(/\/[^\/]+$/, '/_layout.tsx');
-  while (layoutPath !== '/_layout.tsx') {
+  let layoutPath = `/${pagePath}`.replace(/\/[^\/]+$/, "/_layout.tsx");
+  while (layoutPath !== "/_layout.tsx") {
     if (layoutPaths.includes(layoutPath.slice(1))) {
       break;
     }
-    layoutPath = layoutPath.replace(/\/[^\/]+\/[^\/]+$/, '/_layout.tsx');
+    layoutPath = layoutPath.replace(/\/[^\/]+\/[^\/]+$/, "/_layout.tsx");
   }
   layoutPath = layoutPath.slice(1);
   return layoutPath;
@@ -83,7 +83,7 @@ export function findNearestLayoutPath(pagePath: string, layoutPaths: string[]) {
 /** A util to replace fs.walk method, return relativeToSrcPath instead of fullPath */
 export async function walk(
   srcDir: string,
-  walkOptions: fs.WalkOptions & Pick<PagicConfig, 'include' | 'exclude'> = {}
+  walkOptions: fs.WalkOptions & Pick<PagicConfig, "include" | "exclude"> = {},
 ): Promise<string[]> {
   let { match, skip, include, exclude } = walkOptions;
   const includeMatch = include?.reduce<RegExp[]>((prev, glob) => {
@@ -102,7 +102,7 @@ export async function walk(
     includeDirs: false,
     ...walkOptions,
     match: include ? includeMatch : match,
-    skip: [...(skip ?? []), ...(excludeSkip ?? [])]
+    skip: [...(skip ?? []), ...(excludeSkip ?? [])],
   });
 
   if (include && match) {
@@ -116,8 +116,8 @@ export async function walk(
       walkPaths.push(path.relative(srcDir, i.path));
     }
   }
-  if (path.sep === '\\') {
-    walkPaths = walkPaths.map((walkPath) => walkPath.replace(/\\/g, '/'));
+  if (path.sep === "\\") {
+    walkPaths = walkPaths.map((walkPath) => walkPath.replace(/\\/g, "/"));
   }
   return walkPaths;
 }

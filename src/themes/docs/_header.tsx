@@ -1,7 +1,7 @@
-import { React } from '../../../deps.ts';
+import { React } from "../../../deps.ts";
 
-import { PagicLayout } from '../../Pagic.ts';
-import Popover from './_popover.tsx';
+import { PagicLayout } from "../../Pagic.ts";
+import Popover from "./_popover.tsx";
 
 const Header: PagicLayout<{
   isDark: boolean;
@@ -9,7 +9,11 @@ const Header: PagicLayout<{
 }> = ({ config, language, isDark, setIsDark }) => (
   <header>
     <h1 className="hide_on_mobile">
-      <a href={language === config.i18n?.languages[0].code ? config.root : `${config.root}${language}/`}>
+      <a
+        href={language === config.i18n?.languages[0].code
+          ? config.root
+          : `${config.root}${language}/`}
+      >
         {config.title}
       </a>
     </h1>
@@ -19,16 +23,18 @@ const Header: PagicLayout<{
           <a
             className="czs-menu-l"
             href="#"
-            style={{ backgroundImage: `url("${config.root}assets/czs-menu-l.svg")` }}
+            style={{
+              backgroundImage: `url("${config.root}assets/czs-menu-l.svg")`,
+            }}
             onClick={(e) => {
               e.preventDefault();
               // @ts-ignore
-              if (document.documentElement.classList.contains('show_sidebar')) {
+              if (document.documentElement.classList.contains("show_sidebar")) {
                 // @ts-ignore
-                document.documentElement.classList.remove('show_sidebar');
+                document.documentElement.classList.remove("show_sidebar");
               } else {
                 // @ts-ignore
-                document.documentElement.classList.add('show_sidebar');
+                document.documentElement.classList.add("show_sidebar");
               }
             }}
           />
@@ -39,7 +45,7 @@ const Header: PagicLayout<{
               href={config.root}
               onClick={() => {
                 // @ts-ignore
-                document.documentElement.classList.remove('show_sidebar');
+                document.documentElement.classList.remove("show_sidebar");
               }}
             >
               {config.title}
@@ -47,38 +53,42 @@ const Header: PagicLayout<{
           </h1>
         </li>
         {config.nav
-          ?.filter(({ align }: any) => align !== 'right')
+          ?.filter(({ align }: any) => align !== "right")
           .map(({ text, link, target, popover }: any) => (
             <li key={link} className="hide_on_mobile">
-              {popover ? (
-                <Popover placement="bottom-start" content={popover}>
+              {popover
+                ? (
+                  <Popover placement="bottom-start" content={popover}>
+                    <a href={link} target={target}>
+                      {text}
+                    </a>
+                  </Popover>
+                )
+                : (
                   <a href={link} target={target}>
                     {text}
                   </a>
-                </Popover>
-              ) : (
-                <a href={link} target={target}>
-                  {text}
-                </a>
-              )}
+                )}
             </li>
           ))}
         <li style={{ flexGrow: 1 }} />
         {config.nav
-          ?.filter(({ align }: any) => align === 'right')
+          ?.filter(({ align }: any) => align === "right")
           .map(({ text, link, target, popover }: any) => (
             <li key={link} className="hide_on_mobile">
-              {popover ? (
-                <Popover placement="bottom-end" content={popover}>
+              {popover
+                ? (
+                  <Popover placement="bottom-end" content={popover}>
+                    <a href={link} target={target}>
+                      {text}
+                    </a>
+                  </Popover>
+                )
+                : (
                   <a href={link} target={target}>
                     {text}
                   </a>
-                </Popover>
-              ) : (
-                <a href={link} target={target}>
-                  {text}
-                </a>
-              )}
+                )}
             </li>
           ))}
         {config.github && (
@@ -87,7 +97,10 @@ const Header: PagicLayout<{
               className="czs-github-logo"
               href={config.github}
               target="_blank"
-              style={{ backgroundImage: `url("${config.root}assets/czs-github-logo.svg")` }}
+              style={{
+                backgroundImage:
+                  `url("${config.root}assets/czs-github-logo.svg")`,
+              }}
             />
           </li>
         )}
@@ -104,9 +117,12 @@ const Header: PagicLayout<{
                 if (language === config.i18n?.languages[0].code) {
                   url.pathname = `/${language}${url.pathname}`;
                 }
-                url.pathname = url.pathname.replace(`/${language}/`, `/${nextLanguage}/`);
+                url.pathname = url.pathname.replace(
+                  `/${language}/`,
+                  `/${nextLanguage}/`,
+                );
                 if (nextLanguage === config.i18n?.languages[0].code) {
-                  url.pathname = url.pathname.replace(`/${nextLanguage}/`, '/');
+                  url.pathname = url.pathname.replace(`/${nextLanguage}/`, "/");
                 }
 
                 // @ts-ignore
@@ -125,14 +141,36 @@ const Header: PagicLayout<{
           onClick={() => {
             setIsDark(!isDark);
             // @ts-ignore
-            document.cookie = `is_dark=${!isDark ? '1' : '0'}; expires=Tue, 19 Jun 2038 03:14:07 UTC; path=/`;
+            document.cookie = `is_dark=${
+              !isDark ? "1" : "0"
+            }; expires=Tue, 19 Jun 2038 03:14:07 UTC; path=/`;
           }}
           className="toggle_dark flex_center"
         >
-          <span className="czs-sun" style={{ backgroundImage: `url("${config.root}assets/czs-sun.svg")` }} />
-          <span className="czs-sun-l" style={{ backgroundImage: `url("${config.root}assets/czs-sun-l.svg")` }} />
-          <span className="czs-moon" style={{ backgroundImage: `url("${config.root}assets/czs-moon.svg")` }} />
-          <span className="czs-moon-l" style={{ backgroundImage: `url("${config.root}assets/czs-moon-l.svg")` }} />
+          <span
+            className="czs-sun"
+            style={{
+              backgroundImage: `url("${config.root}assets/czs-sun.svg")`,
+            }}
+          />
+          <span
+            className="czs-sun-l"
+            style={{
+              backgroundImage: `url("${config.root}assets/czs-sun-l.svg")`,
+            }}
+          />
+          <span
+            className="czs-moon"
+            style={{
+              backgroundImage: `url("${config.root}assets/czs-moon.svg")`,
+            }}
+          />
+          <span
+            className="czs-moon-l"
+            style={{
+              backgroundImage: `url("${config.root}assets/czs-moon-l.svg")`,
+            }}
+          />
         </li>
       </ul>
     </nav>

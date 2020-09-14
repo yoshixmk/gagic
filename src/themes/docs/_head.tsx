@@ -1,8 +1,8 @@
-import { React } from '../../../deps.ts';
-import ReactHelmet from 'https://dev.jspm.io/react-helmet@6.1.0';
+import { React } from "../../../deps.ts";
+import ReactHelmet from "https://dev.jspm.io/react-helmet@6.1.0";
 const { Helmet } = ReactHelmet;
 
-import { PagicLayout } from '../../Pagic.ts';
+import { PagicLayout } from "../../Pagic.ts";
 
 const Head: PagicLayout<{
   isDark: boolean;
@@ -19,14 +19,23 @@ const Head: PagicLayout<{
       <Helmet>
         <meta charSet="utf-8" />
         <meta httpEquiv="x-ua-compatible" content="ie=edge" />
-        <title>{title ? (outputPath !== 'index.html' ? `${title} · ${config.title}` : title) : config.title}</title>
-        {config.description && <meta name="description" content={config.description} />}
+        <title>
+          {title
+            ? (outputPath !== "index.html"
+              ? `${title} · ${config.title}`
+              : title)
+            : config.title}
+        </title>
+        {config.description &&
+          <meta name="description" content={config.description} />}
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
         <link
           id="prismTheme"
           rel="stylesheet"
-          href={isDark ? `${config.root}assets/prism_tomorrow.css` : `${config.root}assets/prism.css`}
+          href={isDark
+            ? `${config.root}assets/prism_tomorrow.css`
+            : `${config.root}assets/prism.css`}
         />
         <link rel="stylesheet" href={`${config.root}assets/index.css`} />
         <script>{scriptSetIsDark}</script>

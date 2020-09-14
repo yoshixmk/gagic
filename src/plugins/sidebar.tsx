@@ -1,4 +1,5 @@
-import Pagic, { PagicPlugin } from '../Pagic.ts';
+import type Pagic from "../Pagic.ts";
+import type { PagicPlugin } from "../Pagic.ts";
 
 export interface PagicConfigSidebar {
   [prefix: string]: OnePagicConfigSidebar;
@@ -6,10 +7,10 @@ export interface PagicConfigSidebar {
 
 export type OnePagicConfigSidebar = (
   | {
-      text?: string;
-      link?: string;
-      children?: OnePagicConfigSidebar;
-    }
+    text?: string;
+    link?: string;
+    children?: OnePagicConfigSidebar;
+  }
   | string
 )[];
 
@@ -21,8 +22,8 @@ export type PagePropsSidebar = {
 }[];
 
 const sidebar: PagicPlugin = {
-  name: 'sidebar',
-  insert: 'after:tsx',
+  name: "sidebar",
+  insert: "after:tsx",
   fn: async (pagic) => {
     if (!pagic.config.sidebar) {
       return;
@@ -34,10 +35,13 @@ const sidebar: PagicPlugin = {
       let parsedSidebar: {
         [prefix: string]: PagePropsSidebar;
       } = {};
-      for (const [prefix, oneConfig] of Object.entries({
-        ...pagic.config.sidebar,
-        ...(pagic.config.i18n?.overrides?.[pageProps.language!]?.sidebar as PagicConfigSidebar)
-      })) {
+      for (
+        const [prefix, oneConfig] of Object.entries({
+          ...pagic.config.sidebar,
+          ...(pagic.config.i18n?.overrides?.[pageProps.language!]
+            ?.sidebar as PagicConfigSidebar),
+        })
+      ) {
         parsedSidebar[prefix] = parseSidebarConfig(oneConfig, pagic);
       }
 
@@ -45,30 +49,35 @@ const sidebar: PagicPlugin = {
         if (`/${pageProps.outputPath}`.startsWith(prefix)) {
           pagic.pagePropsMap[pagePath] = {
             sidebar: pagePropsSidebar,
-            ...pageProps
+            ...pageProps,
           };
           break;
         }
       }
     }
-  }
+  },
 };
 
-function parseSidebarConfig(sidebarConfig: OnePagicConfigSidebar, pagic: Pagic): PagePropsSidebar {
+function parseSidebarConfig(
+  sidebarConfig: OnePagicConfigSidebar,
+  pagic: Pagic,
+): PagePropsSidebar {
   return sidebarConfig.map((sidebarConfigItem) => {
-    if (typeof sidebarConfigItem === 'string') {
+    if (typeof sidebarConfigItem === "string") {
       return {
         text: pagic.pagePropsMap[sidebarConfigItem].title,
         link: pagic.pagePropsMap[sidebarConfigItem].outputPath,
-        pagePath: pagic.pagePropsMap[sidebarConfigItem].pagePath
+        pagePath: pagic.pagePropsMap[sidebarConfigItem].pagePath,
       };
     }
     // Deep clone
-    let item = JSON.parse(JSON.stringify(sidebarConfigItem)) as PagePropsSidebar[0];
-    if (typeof item.text === 'undefined' && typeof item.link !== 'undefined') {
+    let item = JSON.parse(
+      JSON.stringify(sidebarConfigItem),
+    ) as PagePropsSidebar[0];
+    if (typeof item.text === "undefined" && typeof item.link !== "undefined") {
       item.text = pagic.pagePropsMap[item.link].title;
     }
-    if (typeof item.link !== 'undefined') {
+    if (typeof item.link !== "undefined") {
       item.pagePath = item.link;
       item.link = pagic.pagePropsMap[item.link].outputPath;
     }

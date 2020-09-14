@@ -1,15 +1,15 @@
 // https://github.com/i18next/react-i18next/blob/master/src/Trans.js
 
-import HTML from 'https://dev.jspm.io/html-parse-stringify2@2.0.1';
+import HTML from "https://dev.jspm.io/html-parse-stringify2@2.0.1";
 
 // #region context
 let defaultOptions = {
-  bindI18n: 'languageChanged',
-  bindI18nStore: '',
+  bindI18n: "languageChanged",
+  bindI18nStore: "",
   // nsMode: 'fallback' // loop through all namespaces given to hook, HOC, render prop for key lookup
-  transEmptyNodeValue: '',
+  transEmptyNodeValue: "",
   transSupportBasicHtmlNodes: true,
-  transKeepBasicHtmlNodesFor: ['br', 'strong', 'i', 'p'],
+  transKeepBasicHtmlNodesFor: ["br", "strong", "i", "p"],
   // hashTransKey: key => key // calculate a key for Trans component based on defaultValue
   useSuspense: true,
 };
@@ -30,15 +30,15 @@ export function getI18n() {
 // #region utils
 export function warn(...args) {
   if (console && console.warn) {
-    if (typeof args[0] === 'string') args[0] = `react-i18next:: ${args[0]}`;
+    if (typeof args[0] === "string") args[0] = `react-i18next:: ${args[0]}`;
     console.warn(...args);
   }
 }
 
 const alreadyWarned = {};
 export function warnOnce(...args) {
-  if (typeof args[0] === 'string' && alreadyWarned[args[0]]) return;
-  if (typeof args[0] === 'string') alreadyWarned[args[0]] = new Date();
+  if (typeof args[0] === "string" && alreadyWarned[args[0]]) return;
+  if (typeof args[0] === "string") alreadyWarned[args[0]] = new Date();
   warn(...args);
 }
 // #endregion
@@ -52,12 +52,18 @@ function hasChildren(node, checkLength) {
 
 function getChildren(node) {
   if (!node) return [];
-  return node && node.children ? node.children : node.props && node.props.children;
+  return node && node.children
+    ? node.children
+    : node.props && node.props.children;
 }
 
 function hasValidReactChildren(children) {
-  if (Object.prototype.toString.call(children) !== '[object Array]') return false;
-  return children.every(child => React.isValidElement(child));
+  if (
+    Object.prototype.toString.call(children) !== "[object Array]"
+  ) {
+    return false;
+  }
+  return children.every((child) => React.isValidElement(child));
 }
 
 function getAsArray(data) {
@@ -72,8 +78,8 @@ function mergeProps(source, target) {
 }
 
 export function nodesToString(children, i18nOptions) {
-  if (!children) return '';
-  let stringNode = '';
+  if (!children) return "";
+  let stringNode = "";
 
   // do not use `React.Children.toArray`, will fail at object children
   const childrenArray = getAsArray(children);
@@ -81,7 +87,7 @@ export function nodesToString(children, i18nOptions) {
 
   // e.g. lorem <br/> ipsum {{ messageCount, format }} dolor <strong>bold</strong> amet
   childrenArray.forEach((child, childIndex) => {
-    if (typeof child === 'string') {
+    if (typeof child === "string") {
       // actual e.g. lorem
       // expected e.g. lorem
       stringNode += `${child}`;
@@ -94,7 +100,9 @@ export function nodesToString(children, i18nOptions) {
         // actual e.g. lorem <br/> ipsum
         // expected e.g. lorem <br/> ipsum
         stringNode += `<${child.type}/>`;
-      } else if (!childChildren && (!shouldKeepChild || childPropsCount !== 0)) {
+      } else if (
+        !childChildren && (!shouldKeepChild || childPropsCount !== 0)
+      ) {
         // actual e.g. lorem <hr className="test" /> ipsum
         // expected e.g. lorem <0></0> ipsum
         stringNode += `<${childIndex}></${childIndex}>`;
@@ -103,7 +111,10 @@ export function nodesToString(children, i18nOptions) {
         // e.g. <ul i18nIsDynamicList>{['a', 'b'].map(item => ( <li key={item}>{item}</li> ))}</ul>
         // expected e.g. "<0></0>", not e.g. "<0><0>a</0><1>b</1></0>"
         stringNode += `<${childIndex}></${childIndex}>`;
-      } else if (shouldKeepChild && childPropsCount === 1 && typeof childChildren === 'string') {
+      } else if (
+        shouldKeepChild && childPropsCount === 1 &&
+        typeof childChildren === "string"
+      ) {
         // actual e.g. dolor <strong>bold</strong> amet
         // expected e.g. dolor <strong>bold</strong> amet
         stringNode += `<${child.type}>${childChildren}</${child.type}>`;
@@ -112,7 +123,7 @@ export function nodesToString(children, i18nOptions) {
         const content = nodesToString(childChildren, i18nOptions);
         stringNode += `<${childIndex}>${content}</${childIndex}>`;
       }
-    } else if (typeof child === 'object') {
+    } else if (typeof child === "object") {
       // e.g. lorem {{ value, format }} ipsum
       const { format, ...clone } = child;
       const keys = Object.keys(clone);
@@ -139,12 +150,12 @@ export function nodesToString(children, i18nOptions) {
 }
 
 function renderNodes(children, targetString, i18n, i18nOptions, combinedTOpts) {
-  if (targetString === '') return [];
+  if (targetString === "") return [];
 
   // check if contains tags we need to replace from html string to react nodes
   const keepArray = i18nOptions.transKeepBasicHtmlNodesFor || [];
-  const emptyChildrenButNeedsHandling =
-    targetString && new RegExp(keepArray.join('|')).test(targetString);
+  const emptyChildrenButNeedsHandling = targetString &&
+    new RegExp(keepArray.join("|")).test(targetString);
 
   // no need to replace tags in the targetstring
   if (!children && !emptyChildrenButNeedsHandling) return [targetString];
@@ -155,11 +166,12 @@ function renderNodes(children, targetString, i18n, i18nOptions, combinedTOpts) {
   function getData(childs) {
     const childrenArray = getAsArray(childs);
 
-    childrenArray.forEach(child => {
-      if (typeof child === 'string') return;
+    childrenArray.forEach((child) => {
+      if (typeof child === "string") return;
       if (hasChildren(child)) getData(getChildren(child));
-      else if (typeof child === 'object' && !React.isValidElement(child))
+      else if (typeof child === "object" && !React.isValidElement(child)) {
         Object.assign(data, child);
+      }
     });
   }
 
@@ -179,7 +191,9 @@ function renderNodes(children, targetString, i18n, i18nOptions, combinedTOpts) {
     const childs = getChildren(child);
     const mappedChildren = mapAST(childs, node.children, rootReactNode);
     // console.warn('INNER', node.name, node, child, childs, node.children, mappedChildren);
-    return hasValidReactChildren(childs) && mappedChildren.length === 0 ? childs : mappedChildren;
+    return hasValidReactChildren(childs) && mappedChildren.length === 0
+      ? childs
+      : mappedChildren;
   }
 
   function pushTranslatedJSX(child, inner, mem, i) {
@@ -195,31 +209,33 @@ function renderNodes(children, targetString, i18n, i18nOptions, combinedTOpts) {
     const astNodes = getAsArray(astNode);
 
     return astNodes.reduce((mem, node, i) => {
-      const translationContent = node.children && node.children[0] && node.children[0].content;
-      if (node.type === 'tag') {
+      const translationContent = node.children && node.children[0] &&
+        node.children[0].content;
+      if (node.type === "tag") {
         let tmp = reactNodes[parseInt(node.name, 10)]; // regular array (components or children)
-        if (!tmp && rootReactNode.length === 1 && rootReactNode[0][node.name])
+        if (!tmp && rootReactNode.length === 1 && rootReactNode[0][node.name]) {
           tmp = rootReactNode[0][node.name]; // trans components is an object
+        }
         if (!tmp) tmp = {};
         //  console.warn('TMP', node.name, parseInt(node.name, 10), tmp, reactNodes);
-        const child =
-          Object.keys(node.attrs).length !== 0 ? mergeProps({ props: node.attrs }, tmp) : tmp;
+        const child = Object.keys(node.attrs).length !== 0
+          ? mergeProps({ props: node.attrs }, tmp)
+          : tmp;
 
         const isElement = React.isValidElement(child);
 
-        const isValidTranslationWithChildren =
-          isElement && hasChildren(node, true) && !node.voidElement;
+        const isValidTranslationWithChildren = isElement &&
+          hasChildren(node, true) && !node.voidElement;
 
-        const isEmptyTransWithHTML =
-          emptyChildrenButNeedsHandling && typeof child === 'object' && child.dummy && !isElement;
+        const isEmptyTransWithHTML = emptyChildrenButNeedsHandling &&
+          typeof child === "object" && child.dummy && !isElement;
 
-        const isKnownComponent =
-          typeof children === 'object' &&
+        const isKnownComponent = typeof children === "object" &&
           children !== null &&
           Object.hasOwnProperty.call(children, node.name);
         // console.warn('CHILD', node.name, node, isElement, child);
 
-        if (typeof child === 'string') {
+        if (typeof child === "string") {
           mem.push(child);
         } else if (
           hasChildren(child) || // the jsx element has children -> loop
@@ -232,39 +248,52 @@ function renderNodes(children, targetString, i18n, i18nOptions, combinedTOpts) {
           // conversion to react nodes
           // so we just need to map the inner stuff
           const inner = mapAST(
-            reactNodes /* wrong but we need something */,
+            reactNodes, /* wrong but we need something */
             node.children,
             rootReactNode,
           );
-          mem.push(React.cloneElement(child, { ...child.props, key: i }, inner));
+          mem.push(
+            React.cloneElement(child, { ...child.props, key: i }, inner),
+          );
         } else if (Number.isNaN(parseFloat(node.name))) {
           if (isKnownComponent) {
             const inner = renderInner(child, node, rootReactNode);
             pushTranslatedJSX(child, inner, mem, i);
-          } else if (i18nOptions.transSupportBasicHtmlNodes && keepArray.indexOf(node.name) > -1) {
+          } else if (
+            i18nOptions.transSupportBasicHtmlNodes &&
+            keepArray.indexOf(node.name) > -1
+          ) {
             if (node.voidElement) {
-              mem.push(React.createElement(node.name, { key: `${node.name}-${i}` }));
+              mem.push(
+                React.createElement(node.name, { key: `${node.name}-${i}` }),
+              );
             } else {
               const inner = mapAST(
-                reactNodes /* wrong but we need something */,
+                reactNodes, /* wrong but we need something */
                 node.children,
                 rootReactNode,
               );
 
-              mem.push(React.createElement(node.name, { key: `${node.name}-${i}` }, inner));
+              mem.push(
+                React.createElement(
+                  node.name,
+                  { key: `${node.name}-${i}` },
+                  inner,
+                ),
+              );
             }
           } else if (node.voidElement) {
             mem.push(`<${node.name} />`);
           } else {
             const inner = mapAST(
-              reactNodes /* wrong but we need something */,
+              reactNodes, /* wrong but we need something */
               node.children,
               rootReactNode,
             );
 
             mem.push(`<${node.name}>${inner}</${node.name}>`);
           }
-        } else if (typeof child === 'object' && !isElement) {
+        } else if (typeof child === "object" && !isElement) {
           const content = node.children[0] ? translationContent : null;
 
           // v1
@@ -275,11 +304,17 @@ function renderNodes(children, targetString, i18n, i18nOptions, combinedTOpts) {
         } else if (node.children.length === 1 && translationContent) {
           // If component does not have children, but translation - has
           // with this in component could be components={[<span class='make-beautiful'/>]} and in translation - 'some text <0>some highlighted message</0>'
-          mem.push(React.cloneElement(child, { ...child.props, key: i }, translationContent));
+          mem.push(
+            React.cloneElement(
+              child,
+              { ...child.props, key: i },
+              translationContent,
+            ),
+          );
         } else {
           mem.push(React.cloneElement(child, { ...child.props, key: i }));
         }
-      } else if (node.type === 'text') {
+      } else if (node.type === "text") {
         mem.push(node.content);
       }
       return mem;
@@ -289,7 +324,11 @@ function renderNodes(children, targetString, i18n, i18nOptions, combinedTOpts) {
   // call mapAST with having react nodes nested into additional node like
   // we did for the string ast from translation
   // return the children of that extra node to get expected result
-  const result = mapAST([{ dummy: true, children }], ast, getAsArray(children || []));
+  const result = mapAST(
+    [{ dummy: true, children }],
+    ast,
+    getAsArray(children || []),
+  );
   return getChildren(result[0]);
 }
 
@@ -307,30 +346,41 @@ export function Trans({
   t: tFromProps,
   ...additionalProps
 }) {
-  const { i18n: i18nFromContext, defaultNS: defaultNSFromContext } = React.useContext(I18nContext) || {};
+  const { i18n: i18nFromContext, defaultNS: defaultNSFromContext } =
+    React.useContext(I18nContext) || {};
   const i18n = i18nFromProps || i18nFromContext || getI18n();
 
   if (!i18n) {
-    warnOnce('You will need to pass in an i18next instance by using i18nextReactModule');
+    warnOnce(
+      "You will need to pass in an i18next instance by using i18nextReactModule",
+    );
     return children;
   }
 
-  const t = tFromProps || i18n.t.bind(i18n) || (k => k);
+  const t = tFromProps || i18n.t.bind(i18n) || ((k) => k);
 
-  const reactI18nextOptions = { ...getDefaults(), ...(i18n.options && i18n.options.react) };
+  const reactI18nextOptions = {
+    ...getDefaults(),
+    ...(i18n.options && i18n.options.react),
+  };
 
   // prepare having a namespace
-  let namespaces = ns || t.ns || defaultNSFromContext || (i18n.options && i18n.options.defaultNS);
-  namespaces = typeof namespaces === 'string' ? [namespaces] : namespaces || ['translation'];
+  let namespaces = ns || t.ns || defaultNSFromContext ||
+    (i18n.options && i18n.options.defaultNS);
+  namespaces = typeof namespaces === "string"
+    ? [namespaces]
+    : namespaces || ["translation"];
 
-  const defaultValue =
-    defaults ||
+  const defaultValue = defaults ||
     nodesToString(children, reactI18nextOptions) ||
     reactI18nextOptions.transEmptyNodeValue ||
     i18nKey;
   const { hashTransKey } = reactI18nextOptions;
-  const key = i18nKey || (hashTransKey ? hashTransKey(defaultValue) : defaultValue);
-  const interpolationOverride = values ? {} : { interpolation: { prefix: '#$?', suffix: '?$#' } };
+  const key = i18nKey ||
+    (hashTransKey ? hashTransKey(defaultValue) : defaultValue);
+  const interpolationOverride = values
+    ? {}
+    : { interpolation: { prefix: "#$?", suffix: "?$#" } };
   const combinedTOpts = {
     ...tOptions,
     count,
@@ -351,7 +401,11 @@ export function Trans({
 
   // allows user to pass `null` to `parent`
   // and override `defaultTransParent` if is present
-  const useAsParent = parent !== undefined ? parent : reactI18nextOptions.defaultTransParent;
+  const useAsParent = parent !== undefined
+    ? parent
+    : reactI18nextOptions.defaultTransParent;
 
-  return useAsParent ? React.createElement(useAsParent, additionalProps, content) : content;
+  return useAsParent
+    ? React.createElement(useAsParent, additionalProps, content)
+    : content;
 }

@@ -1,67 +1,75 @@
-import { path, React } from '../../deps.ts';
-import fm from 'https://dev.jspm.io/front-matter@4.0.2';
-import MarkdownIt from 'https://dev.jspm.io/markdown-it@11.0.0';
-import markdownItTitle from 'https://dev.jspm.io/markdown-it-title@3.0.0';
-import markdownItAnchor from 'https://dev.jspm.io/markdown-it-anchor@5.3.0';
-import markdownitTocDoneRight from 'https://dev.jspm.io/markdown-it-toc-done-right@4.1.0';
-import markdownitReplaceLink from 'https://dev.jspm.io/markdown-it-replace-link@1.0.1';
-import markdownitHighlightLines from '../vendors/markdown-it-highlight-lines/index.js';
+import { path, React } from "../../deps.ts";
+import fm from "https://dev.jspm.io/front-matter@4.0.2";
+import MarkdownIt from "https://dev.jspm.io/markdown-it@11.0.0";
+import markdownItTitle from "https://dev.jspm.io/markdown-it-title@3.0.0";
+import markdownItAnchor from "https://dev.jspm.io/markdown-it-anchor@5.3.0";
+import markdownitTocDoneRight from "https://dev.jspm.io/markdown-it-toc-done-right@4.1.0";
+import markdownitReplaceLink from "https://dev.jspm.io/markdown-it-replace-link@1.0.1";
+import markdownitHighlightLines from "../vendors/markdown-it-highlight-lines/index.js";
 
-import Prism from '../vendors/prism/mod.ts';
-import { replaceLink } from '../utils/mod.ts';
+import Prism from "../vendors/prism/mod.ts";
+import { replaceLink } from "../utils/mod.ts";
 
 /**
  * tocHTML is set in the markdownitTocDoneRight callback, and is used later
  * So tocHTML need to be a global variable
  */
-let tocHTML = '';
+let tocHTML = "";
 
 const mdRenderer = new MarkdownIt({
   html: true,
   linkify: true,
-  highlight: (str: string, lang = 'autoit') => {
-    if (typeof Prism.languages[lang] === 'undefined') {
+  highlight: (str: string, lang = "autoit") => {
+    if (typeof Prism.languages[lang] === "undefined") {
       // eslint-disable-next-line no-param-reassign
-      lang = 'autoit';
+      lang = "autoit";
     }
     const grammar = Prism.languages[lang];
     // https://github.com/PrismJS/prism/issues/1171#issuecomment-631470253
-    Prism.hooks.run('before-highlight', { grammar });
-    return `<pre class="language-${lang}"><code class="language-${lang}">${Prism.highlight(
-      str,
-      grammar,
-      lang
-    )}</code></pre>`;
+    Prism.hooks.run("before-highlight", { grammar });
+    return `<pre class="language-${lang}"><code class="language-${lang}">${
+      Prism.highlight(
+        str,
+        grammar,
+        lang,
+      )
+    }</code></pre>`;
   },
-  replaceLink
+  replaceLink,
 })
   .use(markdownItTitle)
   .use(markdownItAnchor, {
     level: [2, 3, 4, 5, 6],
     permalink: true,
     permalinkSpace: false,
-    permalinkClass: 'anchor',
-    permalinkSymbol: '§'
+    permalinkClass: "anchor",
+    permalinkSymbol: "§",
   })
   .use(markdownitTocDoneRight, {
-    containerClass: 'toc',
+    containerClass: "toc",
     level: [2, 3],
     callback: (html: string) => {
       tocHTML = html;
-    }
+    },
   })
   .use(markdownitReplaceLink)
   .use(markdownitHighlightLines);
 
-import { PagicPlugin } from '../Pagic.ts';
+import type { PagicPlugin } from "../Pagic.ts";
 
 const md: PagicPlugin = {
-  name: 'md',
+  name: "md",
   fn: async (pagic) => {
-    for (const pagePath of pagic.pagePaths.filter((pagePath) => pagePath.endsWith('.md'))) {
+    for (
+      const pagePath of pagic.pagePaths.filter((pagePath) =>
+        pagePath.endsWith(".md")
+      )
+    ) {
       const pageProps = pagic.pagePropsMap[pagePath];
 
-      let content = await Deno.readTextFile(path.resolve(pagic.config.srcDir, pagePath));
+      let content = await Deno.readTextFile(
+        path.resolve(pagic.config.srcDir, pagePath),
+      );
       const fmResult = fm(content);
       const frontMatter = fmResult.attributes;
       content = fmResult.body;
@@ -79,16 +87,18 @@ const md: PagicPlugin = {
         title,
         content: <article dangerouslySetInnerHTML={{ __html: contentHTML }} />,
         // Set to null if toc is empty
-        toc:
-          tocHTML === '<nav class="toc"></nav>' || tocHTML === '<nav class="toc"><ol></ol></nav>' ? null : (
+        toc: tocHTML === '<nav class="toc"></nav>' ||
+            tocHTML === '<nav class="toc"><ol></ol></nav>'
+          ? null
+          : (
             <aside dangerouslySetInnerHTML={{ __html: tocHTML }} />
           ),
-        ...frontMatter
+        ...frontMatter,
       };
 
-      tocHTML = '';
+      tocHTML = "";
     }
-  }
+  },
 };
 
 export default md;

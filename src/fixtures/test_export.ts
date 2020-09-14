@@ -1,4 +1,4 @@
 export const foo = 1;
 
-const bar = 'Hello';
+const bar = "Hello";
 export default bar;

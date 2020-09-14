@@ -1,4 +1,4 @@
-import { React } from '../../../deps.ts';
+import { React } from "../../../deps.ts";
 
 const style = `
 .sk-circle {
@@ -128,7 +128,7 @@ const Loading = () => (
     <div className="sk-circle">
       <style
         dangerouslySetInnerHTML={{
-          __html: style
+          __html: style,
         }}
       />
       <div className="sk-circle1 sk-child" />

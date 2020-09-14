@@ -1,32 +1,32 @@
-import { PagicPlugin } from '../Pagic.ts';
-import { PagePropsSidebar } from './sidebar.tsx';
-import { pick, depthFirstTraversal } from '../utils/mod.ts';
+import { PagicPlugin } from "../Pagic.ts";
+import { PagePropsSidebar } from "./sidebar.tsx";
+import { pick, depthFirstTraversal } from "../utils/mod.ts";
 
 const prev_next: PagicPlugin = {
-  name: 'prev_next',
-  insert: 'after:sidebar',
+  name: "prev_next",
+  insert: "after:sidebar",
   fn: async (pagic) => {
     for (const pagePath of pagic.pagePaths) {
       let pageProps = pagic.pagePropsMap[pagePath];
-      if (typeof pageProps.prev === 'string') {
+      if (typeof pageProps.prev === "string") {
         pageProps.prev = {
           text: pagic.pagePropsMap[pageProps.prev].title,
-          link: pagic.pagePropsMap[pageProps.prev].outputPath
+          link: pagic.pagePropsMap[pageProps.prev].outputPath,
         };
       }
-      if (typeof pageProps.next === 'string') {
+      if (typeof pageProps.next === "string") {
         pageProps.next = {
           text: pagic.pagePropsMap[pageProps.next].title,
-          link: pagic.pagePropsMap[pageProps.next].outputPath
+          link: pagic.pagePropsMap[pageProps.next].outputPath,
         };
       }
       if (!pageProps.sidebar) continue;
       pagic.pagePropsMap[pagePath] = {
         ...getPrevAndNext(pageProps.sidebar, pagePath),
-        ...pageProps
+        ...pageProps,
       };
     }
-  }
+  },
 };
 
 function getPrevAndNext(pagePropsSidebar: PagePropsSidebar, pagePath: string) {
@@ -51,8 +51,8 @@ function getPrevAndNext(pagePropsSidebar: PagePropsSidebar, pagePath: string) {
     }
   });
   return {
-    prev: pick(prev, ['text', 'link']),
-    next: pick(next, ['text', 'link'])
+    prev: pick(prev, ["text", "link"]),
+    next: pick(next, ["text", "link"]),
   };
 }
 

@@ -1,6 +1,6 @@
-import { React } from '../../../deps.ts';
+import { React } from "../../../deps.ts";
 
-import { PagicLayout } from '../../Pagic.ts';
+import { PagicLayout } from "../../Pagic.ts";
 
 const Tools: PagicLayout = ({ config, pagePath }) => {
   if (!config.tools) {
@@ -24,7 +24,9 @@ const Tools: PagicLayout = ({ config, pagePath }) => {
             e.preventDefault();
             (window as any).scrollTo(0, 0);
           }}
-          style={{ backgroundImage: `url("${config.root}assets/czs-angle-up-l.svg")` }}
+          style={{
+            backgroundImage: `url("${config.root}assets/czs-angle-up-l.svg")`,
+          }}
         />
       )}
     </div>

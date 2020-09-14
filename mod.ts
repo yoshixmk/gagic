@@ -1,12 +1,12 @@
 #!/usr/bin/env -S deno --unstable --allow-read --allow-write --allow-net
-export { React, ReactDOM, ReactDOMServer } from './deps.ts';
-export { t, Trans } from './src/plugins/i18n.tsx';
+export { React, ReactDOM, ReactDOMServer } from "./deps.ts";
+export { t, Trans } from "./src/plugins/i18n.tsx";
 
-import Pagic from './src/Pagic.ts';
-import { logger } from './src/utils/mod.ts';
+import Pagic from "./src/Pagic.ts";
+import { logger } from "./src/utils/mod.ts";
 export default Pagic;
 
-export * from './src/Pagic.ts';
+export * from "./src/Pagic.ts";
 
 if (import.meta.main) {
   const [subCommand, ...restArgs] = Deno.args;
@@ -15,22 +15,22 @@ if (import.meta.main) {
     Deno.exit(1);
   }
 
-  const validSubCommands = ['build'];
+  const validSubCommands = ["build"];
   if (!validSubCommands.includes(subCommand)) {
     throw new Error(`Invalid subCommand ${subCommand}`);
   }
 
-  const validOptions = ['serve', 'watch', 'port'];
+  const validOptions = ["serve", "watch", "port"];
   let options: { [key: string]: any } = {};
   for (let i = 0; i < restArgs.length; i++) {
     const currentArg = restArgs[i];
     const nextArg = restArgs[i + 1];
-    if (currentArg.startsWith('--')) {
+    if (currentArg.startsWith("--")) {
       const key = currentArg.slice(2);
       if (!validOptions.includes(key)) {
         throw new Error(`Invalid option ${key}`);
       }
-      if (typeof nextArg === 'undefined' || nextArg.startsWith('-')) {
+      if (typeof nextArg === "undefined" || nextArg.startsWith("-")) {
         options[key] = true;
       } else {
         if (Number(nextArg).toString() === nextArg) {
@@ -40,7 +40,7 @@ if (import.meta.main) {
         }
         i++;
       }
-    } else if (currentArg.startsWith('-')) {
+    } else if (currentArg.startsWith("-")) {
       const key = currentArg.slice(1);
       if (!validOptions.includes(key)) {
         throw new Error(`Invalid option ${key}`);
@@ -51,7 +51,7 @@ if (import.meta.main) {
     }
   }
   const pagic = new Pagic(options);
-  if (subCommand === 'build') {
+  if (subCommand === "build") {
     pagic.build();
   }
 }
