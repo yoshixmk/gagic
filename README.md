@@ -8,6 +8,8 @@ The easiest way to generate static html page from markdown, built with Deno 🦕
 Gagic is the second version of [Pagic](https://deno.land/x/pagic).
 Hard forked [v0.9.1](https://deno.land/x/pagic@v0.9.1)
 
+[Pagic](https://deno.land/x/pagic) supports up to Deno 1.3.3, so Gagic is developing Deno 1.4.0 and above for support.
+
 ## Features
 
 - [Gagic](#gagic)
@@ -15,7 +17,6 @@ Hard forked [v0.9.1](https://deno.land/x/pagic@v0.9.1)
   - [Live demo](#live-demo)
   - [Getting started](#getting-started)
     - [Installation](#installation)
-      - [Docker](#docker)
     - [Markdown + Layout => HTML](#markdown--layout--html)
     - [React component as a page](#react-component-as-a-page)
     - [Copy static files](#copy-static-files)
@@ -44,10 +45,6 @@ curl -fsSL https://deno.land/x/install/install.sh | sh
 # Install gagic
 deno install --unstable --allow-read --allow-write --allow-net --name=gagic https://deno.land/x/gagic/mod.ts
 ```
-
-#### Docker
-
-`alias gagic='docker run -it --rm -v $PWD:/gagic yardenshoham/gagic'`
 
 ### Markdown + Layout => HTML
 
@@ -84,7 +81,7 @@ The `src/index.md` is a simple markdown file:
 ```md
 # Gagic
 
-The easiest way to generate static html page from markdown, built with Deno! 🦕
+The easiest way to generate static html page from markdown, built with Deno 🦕
 ```
 
 Then run:
@@ -115,7 +112,7 @@ The content should be:
   <body>
     <article>
       <h1 id="gagic">Gagic</h1>
-      <p>The easiest way to generate static html page from markdown, built with Deno! 🦕</p>
+      <p>The easiest way to generate static html page from markdown, built with Deno 🦕</p>
     </article>
   </body>
 </html>
@@ -222,7 +219,7 @@ published: 2020-09-15
 
 # Gagic
 
-The easiest way to generate static html page from markdown, built with Deno! 🦕
+The easiest way to generate static html page from markdown, built with Deno 🦕
 ```
 
 Every item in the front matter will pass to the `_layout.tsx` as the props:
