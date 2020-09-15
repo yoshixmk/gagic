@@ -1,7 +1,7 @@
 import { asserts, path } from "../../deps.ts";
 
 import {
-  pagicRootPath,
+  gagicRootPath,
   pascalToUnderline,
   underlineToPascal,
   replaceExt,
@@ -10,11 +10,11 @@ import {
   findNearestLayoutPath,
   walk,
 } from "./filepath.ts";
-import Pagic from "../Pagic.ts";
+import Gagic from "../Gagic.ts";
 
-Deno.test("[pagicRootPath]", () => {
+Deno.test("[gagicRootPath]", () => {
   asserts.assertEquals(
-    pagicRootPath,
+    gagicRootPath,
     path.resolve(path.fromFileUrl(import.meta.url), "../../../"),
   );
 });
@@ -53,24 +53,24 @@ Deno.test("[getOutputPath]", () => {
 });
 Deno.test("[replaceLink]", () => {
   asserts.assertEquals(
-    replaceLink("http://github.com/xcatliu"),
-    "http://github.com/xcatliu",
+    replaceLink("http://github.com/yoshixmk"),
+    "http://github.com/yoshixmk",
   );
   asserts.assertEquals(
-    replaceLink("https://github.com/xcatliu"),
-    "https://github.com/xcatliu",
+    replaceLink("https://github.com/yoshixmk"),
+    "https://github.com/yoshixmk",
   );
   asserts.assertEquals(
-    replaceLink("https://github.com/xcatliu?foo=bar"),
-    "https://github.com/xcatliu?foo=bar",
+    replaceLink("https://github.com/yoshixmk?foo=bar"),
+    "https://github.com/yoshixmk?foo=bar",
   );
   asserts.assertEquals(
-    replaceLink("https://github.com/xcatliu#hello"),
-    "https://github.com/xcatliu#hello",
+    replaceLink("https://github.com/yoshixmk#hello"),
+    "https://github.com/yoshixmk#hello",
   );
   asserts.assertEquals(
-    replaceLink("https://github.com/xcatliu?foo=bar#hello"),
-    "https://github.com/xcatliu?foo=bar#hello",
+    replaceLink("https://github.com/yoshixmk?foo=bar#hello"),
+    "https://github.com/yoshixmk?foo=bar#hello",
   );
   asserts.assertEquals(replaceLink("README.md"), "index.html");
   asserts.assertEquals(replaceLink("/README.md"), "/index.html");
@@ -143,7 +143,7 @@ Deno.test("[walk]", async () => {
   asserts.assertEquals(
     sort(
       await walk("test/fixtures/walk", {
-        match: [Pagic.REGEXP_PAGE],
+        match: [Gagic.REGEXP_PAGE],
       }),
     ),
     [
@@ -159,7 +159,7 @@ Deno.test("[walk]", async () => {
   asserts.assertEquals(
     sort(
       await walk("test/fixtures/walk", {
-        match: [Pagic.REGEXP_LAYOUT],
+        match: [Gagic.REGEXP_LAYOUT],
       }),
     ),
     [
@@ -174,7 +174,7 @@ Deno.test("[walk]", async () => {
   asserts.assertEquals(
     sort(
       await walk("test/fixtures/walk", {
-        skip: [Pagic.REGEXP_PAGE, Pagic.REGEXP_LAYOUT],
+        skip: [Gagic.REGEXP_PAGE, Gagic.REGEXP_LAYOUT],
       }),
     ),
     [".bar", "a/bar", "a/c/foo", "b/foo", "bar", "foo"],
@@ -182,7 +182,7 @@ Deno.test("[walk]", async () => {
   asserts.assertEquals(
     sort(
       await walk("test/fixtures/walk", {
-        skip: [path.globToRegExp("**/.*"), Pagic.REGEXP_LAYOUT],
+        skip: [path.globToRegExp("**/.*"), Gagic.REGEXP_LAYOUT],
       }),
     ),
     [
@@ -211,7 +211,7 @@ Deno.test("[walk]", async () => {
   asserts.assertEquals(
     sort(
       await walk("test/fixtures/walk", {
-        match: [Pagic.REGEXP_PAGE],
+        match: [Gagic.REGEXP_PAGE],
         include: ["a"],
       }),
     ),
@@ -220,7 +220,7 @@ Deno.test("[walk]", async () => {
   asserts.assertEquals(
     sort(
       await walk("test/fixtures/walk", {
-        match: [Pagic.REGEXP_PAGE],
+        match: [Gagic.REGEXP_PAGE],
         exclude: ["b"],
       }),
     ),
@@ -229,7 +229,7 @@ Deno.test("[walk]", async () => {
   asserts.assertEquals(
     sort(
       await walk("test/fixtures/walk", {
-        match: [Pagic.REGEXP_PAGE],
+        match: [Gagic.REGEXP_PAGE],
         include: ["a"],
         exclude: ["c"],
       }),

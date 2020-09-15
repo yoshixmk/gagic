@@ -1,28 +1,38 @@
-# Pagic
+# Gagic
 
-[![ci](https://github.com/xcatliu/pagic/workflows/ci/badge.svg)](https://github.com/xcatliu/pagic/actions)
+[![(Deno)](https://img.shields.io/badge/deno-^1.4.0-green.svg?style=flat-square&logo=deno)](https://deno.land)
+[![ci](https://github.com/yoshixmk/gagic/workflows/ci/badge.svg)](https://github.com/yoshixmk/gagic/actions)
 
-The easiest way to generate static html page from markdown, built with Deno! 🦕
+The easiest way to generate static html page from markdown, built with Deno 🦕
+
+Gagic is the second version of [Pagic](https://deno.land/x/pagic).
+Hard forked [v0.9.1](https://deno.land/x/pagic@v0.9.1)
 
 ## Features
 
-- [Markdown + Layout => HTML](#markdown--layout--html)
-- [React component as a page](#react-component-as-a-page)
-- [Copy static files](#copy-static-files)
-- [Sub pages and layouts](#sub-pages-and-layouts)
-- [Front matter](#front-matter)
-- [Configuration](#configuration)
-- [Plugins and themes](#plugins-and-themes)
-
-WARNING: This project is under development so api would changes without announce. The stable version will some soon when [v1.0.0](https://github.com/xcatliu/pagic/projects/3) finished.
+- [Gagic](#gagic)
+  - [Features](#features)
+  - [Live demo](#live-demo)
+  - [Getting started](#getting-started)
+    - [Installation](#installation)
+      - [Docker](#docker)
+    - [Markdown + Layout => HTML](#markdown--layout--html)
+    - [React component as a page](#react-component-as-a-page)
+    - [Copy static files](#copy-static-files)
+    - [Sub pages and layouts](#sub-pages-and-layouts)
+    - [Front matter](#front-matter)
+      - [Front matter in react component](#front-matter-in-react-component)
+    - [Configuration](#configuration)
+    - [Plugins and themes](#plugins-and-themes)
+  - [Use gagic as cli](#use-gagic-as-cli)
+    - [`gagic build`](#gagic-build)
+  - [LICENSE](#license)
 
 ## Live demo
 
 - [Deno X ranking](https://yoshixmk.github.io/deno-x-ranking/) ([GitHub](https://github.com/yoshixmk/deno-x-ranking))
-- [TypeScript 入门教程](https://ts.xcatliu.com/) ([GitHub](https://github.com/xcatliu/typescript-tutorial/))
 - [Deno 钻研之术](https://deno-tutorial.js.org/) ([GitHub](https://github.com/hylerrix/deno-tutorial))
 - [Deno 中文手册](https://manual.deno.js.cn/) ([GitHub](https://github.com/denocn/deno_manual))
-- [Add my site as a demo](https://github.com/xcatliu/pagic/issues/new?assignees=xcatliu&labels=demo&template=add-a-demo.md&title=Add+my+site+as+a+demo+https%3A%2F%2Fexample.com) 😝
 
 ## Getting started
 
@@ -31,13 +41,13 @@ WARNING: This project is under development so api would changes without announce
 ```bash
 # Install deno https://deno.land/#installation
 curl -fsSL https://deno.land/x/install/install.sh | sh
-# Install pagic
-deno install --unstable --allow-read --allow-write --allow-net --name=pagic https://deno.land/x/pagic/mod.ts
+# Install gagic
+deno install --unstable --allow-read --allow-write --allow-net --name=gagic https://deno.land/x/gagic/mod.ts
 ```
 
 #### Docker
 
-`alias pagic='docker run -it --rm -v $PWD:/pagic yardenshoham/pagic'`
+`alias gagic='docker run -it --rm -v $PWD:/gagic yardenshoham/gagic'`
 
 ### Markdown + Layout => HTML
 
@@ -54,9 +64,9 @@ docs/
 The `src/_layout.tsx` is a simple react component:
 
 ```tsx
-import { React, PagicLayout } from 'https://deno.land/x/pagic/mod.ts';
+import { React, GagicLayout } from 'https://deno.land/x/gagic/mod.ts';
 
-const Layout: PagicLayout = ({ title, content }) => (
+const Layout: GagicLayout = ({ title, content }) => (
   <html>
     <head>
       <title>{title}</title>
@@ -72,7 +82,7 @@ export default Layout;
 The `src/index.md` is a simple markdown file:
 
 ```md
-# Pagic
+# Gagic
 
 The easiest way to generate static html page from markdown, built with Deno! 🦕
 ```
@@ -80,7 +90,7 @@ The easiest way to generate static html page from markdown, built with Deno! �
 Then run:
 
 ```bash
-pagic build
+gagic build
 ```
 
 We'll get an `index.html` file in `public` directory:
@@ -99,12 +109,12 @@ The content should be:
 ```html
 <html>
   <head>
-    <title>Pagic</title>
+    <title>Gagic</title>
     <meta charset="utf-8" />
   </head>
   <body>
     <article>
-      <h1 id="pagic">Pagic</h1>
+      <h1 id="gagic">Gagic</h1>
       <p>The easiest way to generate static html page from markdown, built with Deno! 🦕</p>
     </article>
   </body>
@@ -131,7 +141,7 @@ Here we build `src/hello.tsx` to `public/hello.html`, using `src/_layout.tsx` as
 `src/hello.tsx` is a simple react component:
 
 ```tsx
-import { React } from 'https://deno.land/x/pagic/mod.ts';
+import { React } from 'https://deno.land/x/gagic/mod.ts';
 
 const Hello = () => <h1>Hello world</h1>;
 
@@ -206,11 +216,11 @@ Front matter allows us add extra meta data to markdown:
 
 ```markdown
 ---
-author: xcatliu
-published: 2020-05-20
+author: xcatliu and yoshixmk
+published: 2020-09-15
 ---
 
-# Pagic
+# Gagic
 
 The easiest way to generate static html page from markdown, built with Deno! 🦕
 ```
@@ -218,9 +228,9 @@ The easiest way to generate static html page from markdown, built with Deno! �
 Every item in the front matter will pass to the `_layout.tsx` as the props:
 
 ```tsx
-import { React, PagicLayout } from 'https://deno.land/x/pagic/mod.ts';
+import { React, GagicLayout } from 'https://deno.land/x/gagic/mod.ts';
 
-const Layout: PagicLayout = ({ title, content, author, published }) => (
+const Layout: GagicLayout = ({ title, content, author, published }) => (
   <html>
     <head>
       <title>{title}</title>
@@ -243,7 +253,7 @@ export default Layout;
 In react component we can export a `frontMatter` variable:
 
 ```tsx
-import { React } from 'https://deno.land/x/pagic/mod.ts';
+import { React } from 'https://deno.land/x/gagic/mod.ts';
 
 const Hello = () => <h1>Hello world</h1>;
 
@@ -251,14 +261,14 @@ export default Hello;
 
 export const frontMatter = {
   title: 'Hello world',
-  author: 'xcatliu',
+  author: 'xcatliu and yoshixmk',
   published: '2020-05-20'
 };
 ```
 
 ### Configuration
 
-It's able to configurate pagic by adding a `pagic.config.ts` file. The default configuration is:
+It's able to configurate gagic by adding a `gagic.config.ts` file. The default configuration is:
 
 ```ts
 export default {
@@ -272,8 +282,8 @@ export default {
     '**/package.json',
     '**/package-lock.json',
     '**/node_modules',
-    'pagic.config.ts',
-    'pagic.config.tsx',
+    'gagic.config.ts',
+    'gagic.config.tsx',
     // https://docs.npmjs.com/using-npm/developers.html#keeping-files-out-of-your-package
     '**/config.gypi',
     '**/CVS',
@@ -290,13 +300,13 @@ export default {
 };
 ```
 
-Your `pagic.config.ts` will be **deep-merge** to the default config, that is, your `exclude` and `plugins` will be appended to default, not replace it.
+Your `gagic.config.ts` will be **deep-merge** to the default config, that is, your `exclude` and `plugins` will be appended to default, not replace it.
 
 ### Plugins and themes
 
 As you see default plugins are set to `['init', 'md', 'tsx', 'script', 'layout', 'write']`.
 
-We can add the optional plugins by setting the `plugins` in the `pagic.config.ts` file:
+We can add the optional plugins by setting the `plugins` in the `gagic.config.ts` file:
 
 ```ts
 export default {
@@ -318,18 +328,18 @@ export default {
 };
 ```
 
-To develop a `myPlugin` please checkout the [built-in plugins](https://github.com/xcatliu/pagic/tree/master/src/plugins).
+To develop a `myPlugin` please checkout the [built-in plugins](https://github.com/yoshixmk/gagic/tree/master/src/plugins).
 
 Themes is under development, please come back later!
 
-## Use pagic as cli
+## Use gagic as cli
 
-### `pagic build`
+### `gagic build`
 
-We can use `pagic build` to build static pages, there are some options while using `build` command:
+We can use `gagic build` to build static pages, there are some options while using `build` command:
 
 ```bash
-pagic build [options]
+gagic build [options]
 
 # --watch  watch src dir change
 # --serve  serve public dir
@@ -342,4 +352,4 @@ pagic build [options]
 
 ---
 
-Have fun with pagic!
+Have fun with gagic!

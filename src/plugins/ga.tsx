@@ -1,20 +1,20 @@
 import { React } from "../../deps.ts";
 
-import { PagicPlugin } from "../Pagic.ts";
+import { GagicPlugin } from "../Gagic.ts";
 import Ga from "./ga_component.tsx";
-import { compilePagicFile } from "../utils/mod.ts";
+import { compileGagicFile } from "../utils/mod.ts";
 
-const ga: PagicPlugin = {
+const ga: GagicPlugin = {
   name: "ga",
   insert: "before:script",
-  fn: async (pagic) => {
-    for (const pagePath of pagic.pagePaths) {
-      const pageProps = pagic.pagePropsMap[pagePath];
+  fn: async (gagic) => {
+    for (const pagePath of gagic.pagePaths) {
+      const pageProps = gagic.pagePropsMap[pagePath];
 
-      pagic.pagePropsMap[pagePath] = {
+      gagic.pagePropsMap[pagePath] = {
         head: (
           <>
-            <Ga {...pagic.config.ga} />
+            <Ga {...gagic.config.ga} />
             {pageProps.head}
           </>
         ),
@@ -22,8 +22,8 @@ const ga: PagicPlugin = {
       };
     }
 
-    if (pagic.rebuilding) {
-      pagic.writeFiles["_ga.js"] = await compilePagicFile(
+    if (gagic.rebuilding) {
+      gagic.writeFiles["_ga.js"] = await compileGagicFile(
         "src/plugins/ga_component.tsx",
       );
     }

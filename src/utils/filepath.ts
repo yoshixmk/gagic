@@ -1,12 +1,12 @@
 import { fs, path } from "../../deps.ts";
 
-import type { PagicConfig } from "../Pagic.ts";
+import type { GagicConfig } from "../Gagic.ts";
 
 /**
- * Get the runtime pagic root path, it should be a file-system-path or a url
- * /User/xcatliu/work/github/pagic or https://deno.land/x/pagic
+ * Get the runtime gagic root path, it should be a file-system-path or a url
+ * /User/yoshixmk/work/github/gagic or https://deno.land/x/gagic
  */
-export const pagicRootPath = (() => {
+export const gagicRootPath = (() => {
   if (import.meta.url.startsWith("file://")) {
     return path.resolve(path.fromFileUrl(import.meta.url), "../../../");
   } else {
@@ -46,8 +46,8 @@ export function getOutputPath(pagePath: string) {
     .slice(1);
 }
 /**
- * input: https://github.com/xcatliu
- * output: https://github.com/xcatliu
+ * input: https://github.com/yoshixmk
+ * output: https://github.com/yoshixmk
  *
  * input: foo/bar.md
  * output: foo/bar.html
@@ -83,7 +83,7 @@ export function findNearestLayoutPath(pagePath: string, layoutPaths: string[]) {
 /** A util to replace fs.walk method, return relativeToSrcPath instead of fullPath */
 export async function walk(
   srcDir: string,
-  walkOptions: fs.WalkOptions & Pick<PagicConfig, "include" | "exclude"> = {},
+  walkOptions: fs.WalkOptions & Pick<GagicConfig, "include" | "exclude"> = {},
 ): Promise<string[]> {
   let { match, skip, include, exclude } = walkOptions;
   const includeMatch = include?.reduce<RegExp[]>((prev, glob) => {

@@ -1,7 +1,7 @@
 import { path } from "../../deps.ts";
 
-import { pagicRootPath } from "./filepath.ts";
-import type { PagicPlugin, PagicThemeConfig } from "../Pagic.ts";
+import { gagicRootPath } from "./filepath.ts";
+import type { GagicPlugin, GagicThemeConfig } from "../Gagic.ts";
 
 const importCache: {
   [importPath: string]: any;
@@ -11,28 +11,28 @@ interface ImportOptions {
   reload?: boolean;
 }
 
-/** Import pagic mod default */
-export async function importPagicModDefault<T = any>(
-  pathToPagicRoot: string,
+/** Import gagic mod default */
+export async function importGagicModDefault<T = any>(
+  pathToGagicRoot: string,
   options: ImportOptions = {},
 ): Promise<T> {
-  const mod = await importPagicMod<{ default: T }>(pathToPagicRoot, options);
+  const mod = await importGagicMod<{ default: T }>(pathToGagicRoot, options);
   return mod.default;
 }
-/** Import pagic mod */
-export async function importPagicMod<T = any>(
-  pathToPagicRoot: string,
+/** Import gagic mod */
+export async function importGagicMod<T = any>(
+  pathToGagicRoot: string,
   options: ImportOptions = {},
 ): Promise<T> {
-  const mod = await import_<T>(`${pagicRootPath}/${pathToPagicRoot}`, options);
+  const mod = await import_<T>(`${gagicRootPath}/${pathToGagicRoot}`, options);
   return mod;
 }
 /** Import plugin */
 export async function importPlugin(pluginName: string) {
   if (/^https?:\/\//.test(pluginName)) {
-    return await importDefault<PagicPlugin>(pluginName);
+    return await importDefault<GagicPlugin>(pluginName);
   } else {
-    return await importPagicModDefault<PagicPlugin>(
+    return await importGagicModDefault<GagicPlugin>(
       `src/plugins/${pluginName}.tsx`,
     );
   }
@@ -40,11 +40,11 @@ export async function importPlugin(pluginName: string) {
 /** Import theme or themeFile */
 export async function importTheme(theme: string, themeFile?: string) {
   if (/^https?:\/\//.test(theme)) {
-    return await importDefault<PagicThemeConfig>(
+    return await importDefault<GagicThemeConfig>(
       themeFile ? theme.replace(/\/[^\/]+$/, `/${themeFile}`) : theme,
     );
   } else {
-    return await importPagicModDefault<PagicThemeConfig>(
+    return await importGagicModDefault<GagicThemeConfig>(
       `src/themes/${theme}/${themeFile ?? "mod.ts"}`,
     );
   }

@@ -1,6 +1,6 @@
 import { asserts, path } from "../../deps.ts";
 
-import { compile, compileFile, compilePagicFile } from "./compile.ts";
+import { compile, compileFile, compileGagicFile } from "./compile.ts";
 
 Deno.test("[compile] should remove types", () => {
   const input = `const foo: number = 1;`;
@@ -21,7 +21,7 @@ console.log(foo, bar);
 });
 Deno.test("[compile] should remove react and react-dom imports", () => {
   const input = `
-import { React, ReactDOM } from 'https://deno.land/x/pagic/deps.ts';
+import { React, ReactDOM } from 'https://deno.land/x/gagic/deps.ts';
 
 ReactDOM.render(<div />, document.getElementById('foo'));
 `;
@@ -40,8 +40,8 @@ Deno.test("[compileFile] should read input file and compile it", async () => {
     `ReactDOM.render(React.createElement("div", null), document.getElementById('foo'));\n`,
   );
 });
-Deno.test("[compilePagicFile] should compile the input pagic file", async () => {
-  const output = await compilePagicFile(
+Deno.test("[compileGagicFile] should compile the input gagic file", async () => {
+  const output = await compileGagicFile(
     "test/fixtures/react_dom_render_foo.tsx",
   );
   asserts.assertEquals(

@@ -1,21 +1,21 @@
-import type { PagicPlugin } from "../Pagic.ts";
+import type { GagicPlugin } from "../Gagic.ts";
 import { getOutputPath, findNearestLayoutPath } from "../utils/mod.ts";
 
-/** Init pagic.pagePropsMap */
-const init: PagicPlugin = {
+/** Init gagic.pagePropsMap */
+const init: GagicPlugin = {
   name: "init",
-  fn: async (pagic) => {
-    for (const pagePath of pagic.pagePaths) {
-      const layoutPath = findNearestLayoutPath(pagePath, pagic.layoutPaths);
+  fn: async (gagic) => {
+    for (const pagePath of gagic.pagePaths) {
+      const layoutPath = findNearestLayoutPath(pagePath, gagic.layoutPaths);
       const outputPath = getOutputPath(pagePath);
-      pagic.pagePropsMap[pagePath] = {
-        config: pagic.config,
+      gagic.pagePropsMap[pagePath] = {
+        config: gagic.config,
         pagePath,
         layoutPath,
         outputPath,
         title: "",
         content: null,
-        head: pagic.config.head,
+        head: gagic.config.head,
         script: null,
         toc: null,
       };

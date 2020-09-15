@@ -8,17 +8,17 @@ import {
   importDefault,
   logger,
   walk,
-  getPagicConfigPath,
+  getGagicConfigPath,
   importPlugin,
   importTheme,
 } from "./utils/mod.ts";
 import type {
   PagePropsSidebar,
-  PagicConfigSidebar,
+  GagicConfigSidebar,
 } from "./plugins/sidebar.tsx";
 
 // #region types
-export interface PagicConfig {
+export interface GagicConfig {
   srcDir: string;
   outDir: string;
   include?: string[];
@@ -29,7 +29,7 @@ export interface PagicConfig {
   watch: boolean;
   serve: boolean;
   port: number;
-  sidebar?: PagicConfigSidebar;
+  sidebar?: GagicConfigSidebar;
   i18n?: {
     languages: { code: string; name: string }[];
     overrides?: { [code: string]: any };
@@ -38,24 +38,24 @@ export interface PagicConfig {
   [key: string]: any;
 }
 
-export interface PagicThemeConfig {
+export interface GagicThemeConfig {
   files: [];
 }
 
-export interface PagicPlugin {
+export interface GagicPlugin {
   name: string;
   insert?: string;
-  fn: (ctx: Pagic) => Promise<void>;
+  fn: (ctx: Gagic) => Promise<void>;
 }
 
-export type PagicLayout<
+export type GagicLayout<
   T = {
     [key: string]: any;
   },
 > = React.FC<PageProps & T>;
 
 export interface PageProps {
-  config: PagicConfig;
+  config: GagicConfig;
   pagePath: string;
   layoutPath: string;
   outputPath: string;
@@ -74,9 +74,9 @@ export interface PageProps {
 }
 // #endregion
 
-export default class Pagic {
+export default class Gagic {
   // #region properties
-  public static defaultConfig: PagicConfig = {
+  public static defaultConfig: GagicConfig = {
     srcDir: ".",
     outDir: "dist",
     include: undefined,
@@ -87,8 +87,8 @@ export default class Pagic {
       "**/package.json",
       "**/package-lock.json",
       "**/node_modules",
-      "pagic.config.ts",
-      "pagic.config.tsx",
+      "gagic.config.ts",
+      "gagic.config.tsx",
       // https://docs.npmjs.com/using-npm/developers.html#keeping-files-out-of-your-package
       "**/config.gypi",
       "**/CVS",
@@ -108,9 +108,9 @@ export default class Pagic {
   public static REGEXP_LAYOUT = /[\/\\]_[^\/\\]+\.tsx$/;
 
   // @ts-ignore
-  public pagicConfigPath: string;
+  public gagicConfigPath: string;
   // @ts-ignore
-  public config: PagicConfig;
+  public config: GagicConfig;
 
   /** Pages that need to be build */
   public pagePaths: string[] = [];
@@ -126,14 +126,14 @@ export default class Pagic {
   } = {};
   public rebuilding = true;
 
-  public projectConfig: Partial<PagicConfig> = {};
-  private runtimeConfig: Partial<PagicConfig> = {};
+  public projectConfig: Partial<GagicConfig> = {};
+  private runtimeConfig: Partial<GagicConfig> = {};
 
   private changedPaths: string[] = [];
   private timeoutHandler: number | undefined = undefined;
   // #endregion
 
-  public constructor(config: Partial<PagicConfig> = {}) {
+  public constructor(config: Partial<GagicConfig> = {}) {
     this.runtimeConfig = config;
   }
 
@@ -159,23 +159,23 @@ export default class Pagic {
 
   /** Deep merge defaultConfig, projectConfig and runtimeConfig, then sort plugins */
   private async initConfig() {
-    this.pagicConfigPath = await getPagicConfigPath();
-    this.projectConfig = await importDefault(this.pagicConfigPath, {
+    this.gagicConfigPath = await getGagicConfigPath();
+    this.projectConfig = await importDefault(this.gagicConfigPath, {
       reload: true,
     });
     let config = {
-      ...Pagic.defaultConfig,
+      ...Gagic.defaultConfig,
       ...this.projectConfig,
       ...this.runtimeConfig,
     };
     config.exclude = unique([
-      ...(Pagic.defaultConfig.exclude ?? []),
+      ...(Gagic.defaultConfig.exclude ?? []),
       ...(this.projectConfig.exclude ?? []),
       ...(this.runtimeConfig.exclude ?? []),
       config.outDir,
     ]);
     config.plugins = unique([
-      ...Pagic.defaultConfig.plugins,
+      ...Gagic.defaultConfig.plugins,
       ...(this.projectConfig.plugins ?? []),
       ...(this.runtimeConfig.plugins ?? []),
     ]);
@@ -209,11 +209,11 @@ export default class Pagic {
 
   private async watch() {
     logger.success("Watch", colors.underline(this.config.srcDir));
-    const watcher = Deno.watchFs([this.config.srcDir, this.pagicConfigPath]);
+    const watcher = Deno.watchFs([this.config.srcDir, this.gagicConfigPath]);
     for await (const event of watcher) {
-      // pagic.config.ts modified, rebuild
+      // gagic.config.ts modified, rebuild
       if (
-        event.kind === "modify" && event.paths.includes(this.pagicConfigPath)
+        event.kind === "modify" && event.paths.includes(this.gagicConfigPath)
       ) {
         clearTimeout(this.timeoutHandler);
         this.timeoutHandler = setTimeout(async () => {
@@ -262,11 +262,11 @@ export default class Pagic {
           );
           this.rebuilding = true;
           break;
-        } else if (Pagic.REGEXP_LAYOUT.test(fullChangedPath)) {
+        } else if (Gagic.REGEXP_LAYOUT.test(fullChangedPath)) {
           logger.warn(`Layout ${changedPath} changed, start rebuild`);
           this.rebuilding = true;
           break;
-        } else if (Pagic.REGEXP_PAGE.test(fullChangedPath)) {
+        } else if (Gagic.REGEXP_PAGE.test(fullChangedPath)) {
           this.pagePaths.push(changedPath);
         } else {
           this.staticPaths.push(changedPath);
@@ -286,26 +286,26 @@ export default class Pagic {
 
     this.pagePaths = await walk(this.config.srcDir, {
       ...pick(this.config, ["include", "exclude"]),
-      match: [Pagic.REGEXP_PAGE],
+      match: [Gagic.REGEXP_PAGE],
     });
     this.layoutPaths = unique([
       ...(await walk(this.config.srcDir, {
         ...pick(this.config, ["include", "exclude"]),
-        match: [Pagic.REGEXP_LAYOUT],
+        match: [Gagic.REGEXP_LAYOUT],
       })),
       ...themeFiles.filter((filename) =>
-        Pagic.REGEXP_LAYOUT.test(`/${filename}`)
+        Gagic.REGEXP_LAYOUT.test(`/${filename}`)
       ),
     ]);
     this.staticPaths = unique([
       ...(await walk(this.config.srcDir, {
         ...pick(this.config, ["include", "exclude"]),
-        skip: [Pagic.REGEXP_PAGE, Pagic.REGEXP_LAYOUT],
+        skip: [Gagic.REGEXP_PAGE, Gagic.REGEXP_LAYOUT],
       })),
       ...themeFiles.filter(
         (filename) =>
-          !Pagic.REGEXP_PAGE.test(`/${filename}`) &&
-          !Pagic.REGEXP_LAYOUT.test(`/${filename}`),
+          !Gagic.REGEXP_PAGE.test(`/${filename}`) &&
+          !Gagic.REGEXP_LAYOUT.test(`/${filename}`),
       ),
     ]);
   }
@@ -313,7 +313,7 @@ export default class Pagic {
   private async runPlugins() {
     if (this.pagePaths.length === 0 && this.staticPaths.length === 0) return;
 
-    let sortedPlugins: PagicPlugin[] = [];
+    let sortedPlugins: GagicPlugin[] = [];
     for (let pluginName of this.config.plugins) {
       if (pluginName.startsWith("-")) {
         continue;

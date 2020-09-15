@@ -1,18 +1,18 @@
 import { asserts } from "../../deps.ts";
 
-import Pagic from "../Pagic.ts";
+import Gagic from "../Gagic.ts";
 import init from "./init.tsx";
 
 Deno.test("[init]", async () => {
-  const pagic = new Pagic();
+  const gagic = new Gagic();
   // @ts-ignore
-  pagic.config = { head: null };
-  pagic.pagePaths = ["README.md", "foo.tsx", "bar/baz.md"];
-  pagic.layoutPaths = ["bar/_layout.tsx", "_layout.tsx"];
-  await init.fn(pagic);
-  asserts.assertEquals(pagic.pagePropsMap, {
+  gagic.config = { head: null };
+  gagic.pagePaths = ["README.md", "foo.tsx", "bar/baz.md"];
+  gagic.layoutPaths = ["bar/_layout.tsx", "_layout.tsx"];
+  await init.fn(gagic);
+  asserts.assertEquals(gagic.pagePropsMap, {
     "README.md": {
-      config: pagic.config,
+      config: gagic.config,
       pagePath: "README.md",
       layoutPath: "_layout.tsx",
       outputPath: "index.html",
@@ -23,7 +23,7 @@ Deno.test("[init]", async () => {
       toc: null,
     },
     "foo.tsx": {
-      config: pagic.config,
+      config: gagic.config,
       pagePath: "foo.tsx",
       layoutPath: "_layout.tsx",
       outputPath: "foo.html",
@@ -34,7 +34,7 @@ Deno.test("[init]", async () => {
       toc: null,
     },
     "bar/baz.md": {
-      config: pagic.config,
+      config: gagic.config,
       pagePath: "bar/baz.md",
       layoutPath: "bar/_layout.tsx",
       outputPath: "bar/baz.html",

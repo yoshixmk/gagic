@@ -1,10 +1,10 @@
 import { React } from "../../../deps.ts";
 
-import { PagicLayout, PageProps } from "../../Pagic.ts";
+import { GagicLayout, PageProps } from "../../Gagic.ts";
 import { PagePropsSidebar } from "../../plugins/sidebar.tsx";
 import { classnames } from "./_utils.tsx";
 
-const Sidebar: PagicLayout = ({ config, outputPath, sidebar }) => {
+const Sidebar: GagicLayout = ({ config, outputPath, sidebar }) => {
   if (!sidebar) {
     return null;
   }

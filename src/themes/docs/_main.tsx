@@ -1,10 +1,10 @@
 import { React } from "../../../deps.ts";
 import throttle from "https://dev.jspm.io/lodash@4.17.15/throttle";
 
-import { PagicLayout } from "../../Pagic.ts";
+import { GagicLayout } from "../../Gagic.ts";
 import Loading from "./_loading.tsx";
 
-const Main: PagicLayout = (props) => {
+const Main: GagicLayout = (props) => {
   const { config, content, loading, toc, prev, next, gitalk } = props;
 
   React.useEffect(() => {

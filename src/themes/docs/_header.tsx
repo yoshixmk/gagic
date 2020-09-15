@@ -1,9 +1,9 @@
 import { React } from "../../../deps.ts";
 
-import { PagicLayout } from "../../Pagic.ts";
+import { GagicLayout } from "../../Gagic.ts";
 import Popover from "./_popover.tsx";
 
-const Header: PagicLayout<{
+const Header: GagicLayout<{
   isDark: boolean;
   setIsDark: (isDark: boolean) => void;
 }> = ({ config, language, isDark, setIsDark }) => (

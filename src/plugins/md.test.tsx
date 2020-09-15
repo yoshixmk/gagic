@@ -1,15 +1,15 @@
 import { asserts } from "../../deps.ts";
 
-import Pagic from "../Pagic.ts";
+import Gagic from "../Gagic.ts";
 import md from "./md.tsx";
 
 Deno.test("[md]", async () => {
-  const pagic = new Pagic();
-  pagic.config = { srcDir: "test/fixtures" } as any;
-  pagic.pagePaths = ["README.md", "no_toc.md", "no_toc2.md", "foo.tsx"];
-  pagic.pagePropsMap = {
+  const gagic = new Gagic();
+  gagic.config = { srcDir: "test/fixtures" } as any;
+  gagic.pagePaths = ["README.md", "no_toc.md", "no_toc2.md", "foo.tsx"];
+  gagic.pagePropsMap = {
     "README.md": {
-      config: pagic.config,
+      config: gagic.config,
       pagePath: "README.md",
       layoutPath: "_layout.tsx",
       outputPath: "index.html",
@@ -20,7 +20,7 @@ Deno.test("[md]", async () => {
       toc: null,
     },
     "no_toc.md": {
-      config: pagic.config,
+      config: gagic.config,
       pagePath: "no_toc.md",
       layoutPath: "_layout.tsx",
       outputPath: "no_toc.html",
@@ -31,7 +31,7 @@ Deno.test("[md]", async () => {
       toc: null,
     },
     "no_toc2.md": {
-      config: pagic.config,
+      config: gagic.config,
       pagePath: "no_toc2.md",
       layoutPath: "_layout.tsx",
       outputPath: "no_toc2.html",
@@ -42,7 +42,7 @@ Deno.test("[md]", async () => {
       toc: null,
     },
     "foo.tsx": {
-      config: pagic.config,
+      config: gagic.config,
       pagePath: "foo.tsx",
       layoutPath: "_layout.tsx",
       outputPath: "foo.html",
@@ -53,11 +53,11 @@ Deno.test("[md]", async () => {
       toc: null,
     },
   };
-  await md.fn(pagic);
+  await md.fn(gagic);
 
-  const pagePropsREADME = pagic.pagePropsMap["README.md"];
+  const pagePropsREADME = gagic.pagePropsMap["README.md"];
   asserts.assertEquals(pagePropsREADME.title, "Text Fixtures");
-  asserts.assertEquals(pagePropsREADME.author, "xcatliu");
+  asserts.assertEquals(pagePropsREADME.author, "xcatliu and yoshixmk");
   asserts.assertEquals(pagePropsREADME.publicPath, "foo/bar.html");
   asserts.assertEquals(
     pagePropsREADME.content!.props.dangerouslySetInnerHTML.__html,
@@ -73,7 +73,7 @@ Deno.test("[md]", async () => {
     `<nav class="toc"><ol><li><a href="#header-2">Header 2</a><ol><li><a href="#header-3">Header 3</a><ol></ol></li></ol></li></ol></nav>`,
   );
 
-  const pageProps_no_toc = pagic.pagePropsMap["no_toc.md"];
+  const pageProps_no_toc = gagic.pagePropsMap["no_toc.md"];
   asserts.assertEquals(pageProps_no_toc.title, undefined);
   asserts.assertEquals(
     pageProps_no_toc.content!.props.dangerouslySetInnerHTML.__html,
@@ -81,7 +81,7 @@ Deno.test("[md]", async () => {
   );
   asserts.assertEquals(pageProps_no_toc.toc, null);
 
-  const pageProps_no_toc2 = pagic.pagePropsMap["no_toc2.md"];
+  const pageProps_no_toc2 = gagic.pagePropsMap["no_toc2.md"];
   asserts.assertEquals(pageProps_no_toc2.title, "foo");
   asserts.assertEquals(
     pageProps_no_toc2.content!.props.dangerouslySetInnerHTML.__html,
@@ -89,6 +89,6 @@ Deno.test("[md]", async () => {
   );
   asserts.assertEquals(pageProps_no_toc2.toc, null);
 
-  const pageProps_foo = pagic.pagePropsMap["foo.tsx"];
+  const pageProps_foo = gagic.pagePropsMap["foo.tsx"];
   asserts.assertEquals(pageProps_foo.content, null);
 });

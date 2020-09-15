@@ -1,8 +1,8 @@
 import { React } from "../../../deps.ts";
 
-import { PagicLayout } from "../../Pagic.ts";
+import { GagicLayout } from "../../Gagic.ts";
 
-const Tools: PagicLayout = ({ config, pagePath }) => {
+const Tools: GagicLayout = ({ config, pagePath }) => {
   if (!config.tools) {
     return null;
   }

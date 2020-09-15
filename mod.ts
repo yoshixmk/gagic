@@ -2,16 +2,16 @@
 export { React, ReactDOM, ReactDOMServer } from "./deps.ts";
 export { t, Trans } from "./src/plugins/i18n.tsx";
 
-import Pagic from "./src/Pagic.ts";
+import Gagic from "./src/Gagic.ts";
 import { logger } from "./src/utils/mod.ts";
-export default Pagic;
+export default Gagic;
 
-export * from "./src/Pagic.ts";
+export * from "./src/Gagic.ts";
 
 if (import.meta.main) {
   const [subCommand, ...restArgs] = Deno.args;
   if (subCommand === undefined) {
-    logger.info(` Miss valid subCommand, known as 'pagic build'.`);
+    logger.info(` Miss valid subCommand, known as 'gagic build'.`);
     Deno.exit(1);
   }
 
@@ -50,8 +50,8 @@ if (import.meta.main) {
       throw new Error(`Invalid args ${currentArg}`);
     }
   }
-  const pagic = new Pagic(options);
+  const gagic = new Gagic(options);
   if (subCommand === "build") {
-    pagic.build();
+    gagic.build();
   }
 }

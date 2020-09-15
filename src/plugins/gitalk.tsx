@@ -1,19 +1,19 @@
 import { React } from "../../deps.ts";
 
-import { PagicPlugin } from "../Pagic.ts";
+import { GagicPlugin } from "../Gagic.ts";
 import Gitalk from "./gitalk_component.tsx";
-import { compilePagicFile } from "../utils/mod.ts";
+import { compileGagicFile } from "../utils/mod.ts";
 
-const gitalk: PagicPlugin = {
+const gitalk: GagicPlugin = {
   name: "gitalk",
   insert: "before:script",
-  fn: async (pagic) => {
-    for (const pagePath of pagic.pagePaths) {
-      const pageProps = pagic.pagePropsMap[pagePath];
+  fn: async (gagic) => {
+    for (const pagePath of gagic.pagePaths) {
+      const pageProps = gagic.pagePropsMap[pagePath];
 
-      pagic.pagePropsMap[pagePath] = {
+      gagic.pagePropsMap[pagePath] = {
         gitalk: <Gitalk
-          {...pagic.config.gitalk}
+          {...gagic.config.gitalk}
           id={pageProps.outputPath}
           title={pageProps.title}
         />,
@@ -21,8 +21,8 @@ const gitalk: PagicPlugin = {
       };
     }
 
-    if (pagic.rebuilding) {
-      pagic.writeFiles["_gitalk.js"] = await compilePagicFile(
+    if (gagic.rebuilding) {
+      gagic.writeFiles["_gitalk.js"] = await compileGagicFile(
         "src/plugins/gitalk_component.tsx",
       );
     }

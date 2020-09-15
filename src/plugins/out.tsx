@@ -2,24 +2,24 @@ import { fs, path, ReactDOMServer } from "../../deps.ts";
 import ReactHelmet from "https://dev.jspm.io/react-helmet@6.1.0";
 const { Helmet } = ReactHelmet;
 
-import { PagicPlugin } from "../Pagic.ts";
+import { GagicPlugin } from "../Gagic.ts";
 import {
   ensureDirAndWriteFileStr,
   ensureDirAndCopy,
-  copyPagicFile,
+  copyGagicFile,
   download,
 } from "../utils/mod.ts";
 
-const out: PagicPlugin = {
+const out: GagicPlugin = {
   name: "out",
-  fn: async (pagic) => {
-    for (const pagePath of pagic.pagePaths) {
-      const pageProps = pagic.pagePropsMap[pagePath];
+  fn: async (gagic) => {
+    for (const pagePath of gagic.pagePaths) {
+      const pageProps = gagic.pagePropsMap[pagePath];
       const { outputPath, content } = pageProps;
       if (content === null) {
         throw new Error("content is null");
       }
-      const fullFilePath = path.resolve(pagic.config.outDir, outputPath);
+      const fullFilePath = path.resolve(gagic.config.outDir, outputPath);
       (window as any).pageProps = pageProps;
       let htmlString = ReactDOMServer.renderToString(content);
       const helmet = Helmet.renderStatic();
@@ -47,28 +47,28 @@ const out: PagicPlugin = {
       await ensureDirAndWriteFileStr(fullFilePath, htmlString);
     }
 
-    for (const staticPath of pagic.staticPaths) {
-      const src = path.resolve(pagic.config.srcDir, staticPath);
-      const dest = path.resolve(pagic.config.outDir, staticPath);
+    for (const staticPath of gagic.staticPaths) {
+      const src = path.resolve(gagic.config.srcDir, staticPath);
+      const dest = path.resolve(gagic.config.outDir, staticPath);
       if (await fs.exists(src)) {
         await ensureDirAndCopy(src, dest, { overwrite: true });
       } else {
-        if (/^https?:\/\//.test(pagic.config.theme)) {
+        if (/^https?:\/\//.test(gagic.config.theme)) {
           await download(
-            pagic.config.theme.replace(/\/[^\/]+$/, `/${staticPath}`),
+            gagic.config.theme.replace(/\/[^\/]+$/, `/${staticPath}`),
             dest,
           );
         } else {
-          await copyPagicFile(
-            `src/themes/${pagic.config.theme}/${staticPath}`,
+          await copyGagicFile(
+            `src/themes/${gagic.config.theme}/${staticPath}`,
             dest,
           );
         }
       }
     }
 
-    for (const [filePath, content] of Object.entries(pagic.writeFiles)) {
-      const fullFilePath = path.resolve(pagic.config.outDir, filePath);
+    for (const [filePath, content] of Object.entries(gagic.writeFiles)) {
+      const fullFilePath = path.resolve(gagic.config.outDir, filePath);
       await ensureDirAndWriteFileStr(fullFilePath, content);
     }
   },

@@ -1,3 +1,3 @@
-import { React, ReactDOM } from "https://deno.land/x/pagic/mod.ts";
+import { React, ReactDOM } from "https://deno.land/x/gagic/mod.ts";
 
 ReactDOM.render(<div />, document.getElementById("foo"));

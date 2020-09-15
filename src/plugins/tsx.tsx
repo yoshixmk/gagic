@@ -1,18 +1,18 @@
 import { path, React } from "../../deps.ts";
 
-import type { PagicPlugin } from "../Pagic.ts";
+import type { GagicPlugin } from "../Gagic.ts";
 import { import_ } from "../utils/mod.ts";
 
-const tsx: PagicPlugin = {
+const tsx: GagicPlugin = {
   name: "tsx",
-  fn: async (pagic) => {
+  fn: async (gagic) => {
     for (
-      const pagePath of pagic.pagePaths.filter((pagePath) =>
+      const pagePath of gagic.pagePaths.filter((pagePath) =>
         pagePath.endsWith(".tsx")
       )
     ) {
-      const pageProps = pagic.pagePropsMap[pagePath];
-      const fullPagePath = path.resolve(pagic.config.srcDir, pagePath);
+      const pageProps = gagic.pagePropsMap[pagePath];
+      const fullPagePath = path.resolve(gagic.config.srcDir, pagePath);
       const { default: ContentComponent, frontMatter } = await import_(
         fullPagePath,
         {
@@ -20,7 +20,7 @@ const tsx: PagicPlugin = {
         },
       );
 
-      pagic.pagePropsMap[pagePath] = {
+      gagic.pagePropsMap[pagePath] = {
         ...pageProps,
         content: <ContentComponent />,
         ...frontMatter,

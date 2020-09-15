@@ -7,7 +7,7 @@ import {
   omit,
   depthFirstTraversal,
   sortByInsert,
-  getPagicConfigPath,
+  getGagicConfigPath,
 } from "./common.ts";
 
 Deno.test("[unique]", () => {
@@ -96,9 +96,9 @@ Deno.test("[sortByInsert] insert to an inserted item", () => {
     ],
   );
 });
-Deno.test("[getPagicConfigPath]", async () => {
+Deno.test("[getGagicConfigPath]", async () => {
   asserts.assertEquals(
-    await getPagicConfigPath(),
-    path.resolve("pagic.config.tsx"),
+    await getGagicConfigPath(),
+    path.resolve("gagic.config.tsx"),
   );
 });

@@ -1,15 +1,15 @@
 import { asserts, ReactDOMServer } from "../../deps.ts";
 
-import Pagic from "../Pagic.ts";
+import Gagic from "../Gagic.ts";
 import tsx from "./tsx.tsx";
 
 Deno.test("[tsx]", async () => {
-  const pagic = new Pagic();
-  pagic.config = { srcDir: "test/fixtures" } as any;
-  pagic.pagePaths = ["hello.tsx", "README.md"];
-  pagic.pagePropsMap = {
+  const gagic = new Gagic();
+  gagic.config = { srcDir: "test/fixtures" } as any;
+  gagic.pagePaths = ["hello.tsx", "README.md"];
+  gagic.pagePropsMap = {
     "hello.tsx": {
-      config: pagic.config,
+      config: gagic.config,
       pagePath: "hello.tsx",
       layoutPath: "_layout.tsx",
       outputPath: "hello.html",
@@ -20,7 +20,7 @@ Deno.test("[tsx]", async () => {
       toc: null,
     },
     "README.md": {
-      config: pagic.config,
+      config: gagic.config,
       pagePath: "README.md",
       layoutPath: "_layout.tsx",
       outputPath: "index.html",
@@ -31,9 +31,9 @@ Deno.test("[tsx]", async () => {
       toc: null,
     },
   };
-  await tsx.fn(pagic);
+  await tsx.fn(gagic);
 
-  const pageProps_hello = pagic.pagePropsMap["hello.tsx"];
+  const pageProps_hello = gagic.pagePropsMap["hello.tsx"];
   asserts.assertEquals(
     ReactDOMServer.renderToString(pageProps_hello.content!),
     '<h1 data-reactroot="">Hello world</h1>',

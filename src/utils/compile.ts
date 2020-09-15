@@ -2,7 +2,7 @@ import * as ts from "https://dev.jspm.io/typescript@3.9.3";
 import reactElementToJSXStringModule from "https://dev.jspm.io/react-element-to-jsx-string@14.3.1";
 
 import { logger } from "./common.ts";
-import { pagicRootPath } from "./filepath.ts";
+import { gagicRootPath } from "./filepath.ts";
 
 export const reactElementToJSXString =
   (reactElementToJSXStringModule as any).default;
@@ -48,10 +48,10 @@ export async function compileFile(src: string) {
   const content = await Deno.readTextFile(src);
   return compile(content);
 }
-/** Compile a pagic file with local or remote url */
-export async function compilePagicFile(pathToPagicRoot: string) {
-  logger.success("Compile pagic file", pathToPagicRoot);
-  const src = `${pagicRootPath}/${pathToPagicRoot}`;
+/** Compile a gagic file with local or remote url */
+export async function compileGagicFile(pathToGagicRoot: string) {
+  logger.success("Compile gagic file", pathToGagicRoot);
+  const src = `${gagicRootPath}/${pathToGagicRoot}`;
   let content = "";
   if (import.meta.url.startsWith("file://")) {
     content = await Deno.readTextFile(src);

@@ -5,8 +5,8 @@ import {
   importDefault,
   importPlugin,
   importTheme,
-  importPagicMod,
-  importPagicModDefault,
+  importGagicMod,
+  importGagicModDefault,
 } from "./import.ts";
 
 Deno.test("[import_]", async () => {
@@ -33,11 +33,11 @@ Deno.test("[importTheme] _layout.tsx", async () => {
   const Layout = await importTheme("default", "_layout.tsx");
   asserts.assertEquals(Layout instanceof Function, true);
 });
-Deno.test("[importPagicMod]", async () => {
-  const output = await importPagicMod("test/fixtures/test_export.ts");
+Deno.test("[importGagicMod]", async () => {
+  const output = await importGagicMod("test/fixtures/test_export.ts");
   asserts.assertEquals(output.foo, 1);
 });
-Deno.test("[importPagicModDefault]", async () => {
-  const output = await importPagicModDefault("test/fixtures/test_export.ts");
+Deno.test("[importGagicModDefault]", async () => {
+  const output = await importGagicModDefault("test/fixtures/test_export.ts");
   asserts.assertEquals(output, "Hello");
 });

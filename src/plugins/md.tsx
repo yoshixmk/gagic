@@ -55,20 +55,20 @@ const mdRenderer = new MarkdownIt({
   .use(markdownitReplaceLink)
   .use(markdownitHighlightLines);
 
-import type { PagicPlugin } from "../Pagic.ts";
+import type { GagicPlugin } from "../Gagic.ts";
 
-const md: PagicPlugin = {
+const md: GagicPlugin = {
   name: "md",
-  fn: async (pagic) => {
+  fn: async (gagic) => {
     for (
-      const pagePath of pagic.pagePaths.filter((pagePath) =>
+      const pagePath of gagic.pagePaths.filter((pagePath) =>
         pagePath.endsWith(".md")
       )
     ) {
-      const pageProps = pagic.pagePropsMap[pagePath];
+      const pageProps = gagic.pagePropsMap[pagePath];
 
       let content = await Deno.readTextFile(
-        path.resolve(pagic.config.srcDir, pagePath),
+        path.resolve(gagic.config.srcDir, pagePath),
       );
       const fmResult = fm(content);
       const frontMatter = fmResult.attributes;
@@ -82,7 +82,7 @@ const md: PagicPlugin = {
       const contentHTML = mdRenderer.render(content, env).trim();
       const title = env.title;
 
-      pagic.pagePropsMap[pagePath] = {
+      gagic.pagePropsMap[pagePath] = {
         ...pageProps,
         title,
         content: <article dangerouslySetInnerHTML={{ __html: contentHTML }} />,

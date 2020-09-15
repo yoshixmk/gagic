@@ -1,12 +1,12 @@
 import { React } from "../../../deps.ts";
 
-import { PagicLayout } from "../../Pagic.ts";
+import { GagicLayout } from "../../Gagic.ts";
 
-const Footer: PagicLayout = () => (
+const Footer: GagicLayout = () => (
   <footer>
     Powered by{" "}
-    <a href="https://github.com/xcatliu/pagic" target="_blank">
-      Pagic
+    <a href="https://github.com/yoshixmk/gagic" target="_blank">
+      Gagic
     </a>
   </footer>
 );

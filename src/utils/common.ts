@@ -57,21 +57,21 @@ export function depthFirstTraversal<T>(
 // #region Log utils
 export const logger = {
   info: (...args: string[]) => {
-    console.log("[Pagic]", ...args);
+    console.log("[Gagic]", ...args);
   },
   warn: (first: string, ...args: string[]) => {
-    console.log(colors.yellow("[Pagic]"), colors.yellow(first), ...args);
+    console.log(colors.yellow("[Gagic]"), colors.yellow(first), ...args);
   },
   error: (first: string, ...args: string[]) => {
-    console.log(colors.red("[Pagic]"), colors.red(first), ...args);
+    console.log(colors.red("[Gagic]"), colors.red(first), ...args);
   },
   success: (first: string, ...args: string[]) => {
-    console.log(colors.green("[Pagic]"), colors.green(first), ...args);
+    console.log(colors.green("[Gagic]"), colors.green(first), ...args);
   },
 };
 // #endregion
 
-// #region Pagic specific utils
+// #region Gagic specific utils
 /**
  * input: [{name:'a'},{name:'b'},{name:'c',insert:'before:b'}]
  * output: [{name:'a'},{name:'c',insert:'before:b'},{name:'b'}]
@@ -119,14 +119,14 @@ export function sortByInsert<
     });
 }
 
-export async function getPagicConfigPath() {
-  let pagicConfigPath = path.resolve("pagic.config.tsx");
-  if (!(await fs.exists(pagicConfigPath))) {
-    pagicConfigPath = path.resolve("pagic.config.ts");
-    if (!(await fs.exists(pagicConfigPath))) {
-      throw new Error("pagic.config.ts not exist");
+export async function getGagicConfigPath() {
+  let gagicConfigPath = path.resolve("gagic.config.tsx");
+  if (!(await fs.exists(gagicConfigPath))) {
+    gagicConfigPath = path.resolve("gagic.config.ts");
+    if (!(await fs.exists(gagicConfigPath))) {
+      throw new Error("gagic.config.ts not exist");
     }
   }
-  return pagicConfigPath;
+  return gagicConfigPath;
 }
 // #endregion

@@ -1,22 +1,22 @@
 import { fs, path, React } from "../../deps.ts";
 
 import {
-  copyPagicFile,
+  copyGagicFile,
   compile,
   compileFile,
-  compilePagicFile,
+  compileGagicFile,
   reactElementToJSXString,
   replaceExt,
   underlineToPascal,
   pick,
 } from "../utils/mod.ts";
-import Pagic, { PagicPlugin } from "../Pagic.ts";
+import Gagic, { GagicPlugin } from "../Gagic.ts";
 
-const script: PagicPlugin = {
+const script: GagicPlugin = {
   name: "script",
-  fn: async (pagic) => {
-    for (const pagePath of pagic.pagePaths) {
-      let pageProps = pagic.pagePropsMap[pagePath];
+  fn: async (gagic) => {
+    for (const pagePath of gagic.pagePaths) {
+      let pageProps = gagic.pagePropsMap[pagePath];
 
       pageProps.script = (
         <>
@@ -28,14 +28,14 @@ const script: PagicPlugin = {
             crossOrigin="anonymous"
             src="https://unpkg.com/react-dom@16.13.1/umd/react-dom.production.min.js"
           />
-          <script type="module" src={`${pagic.config.root}index.js`} />
+          <script type="module" src={`${gagic.config.root}index.js`} />
         </>
       );
 
       if (pagePath.endsWith(".tsx")) {
         const contentDest = replaceExt(pageProps.outputPath, "_content.js");
-        const compileSrc = path.resolve(pagic.config.srcDir, pagePath);
-        pagic.writeFiles[contentDest] = await compileFile(compileSrc);
+        const compileSrc = path.resolve(gagic.config.srcDir, pagePath);
+        gagic.writeFiles[contentDest] = await compileFile(compileSrc);
       }
 
       /** First is module name, second is module path */
@@ -48,10 +48,10 @@ const script: PagicPlugin = {
             const value: any = pageProps[key];
             if (key === "config") {
               importComponentList.push(
-                ["projectConfig", `${pagic.config.root}pagic.config.js`],
+                ["projectConfig", `${gagic.config.root}gagic.config.js`],
               );
               return `config: { ${
-                JSON.stringify(pick(Pagic.defaultConfig, ["root"])).slice(
+                JSON.stringify(pick(Gagic.defaultConfig, ["root"])).slice(
                   1,
                   -1,
                 )
@@ -64,7 +64,7 @@ const script: PagicPlugin = {
                 const componentName = value.type.name;
                 let modulePath: string;
                 if (underlineToPascal(`_${key}`) === componentName) {
-                  modulePath = `${pagic.config.root}_${key}.js`;
+                  modulePath = `${gagic.config.root}_${key}.js`;
                 } else {
                   modulePath = `./${
                     replaceExt(
@@ -94,28 +94,28 @@ const script: PagicPlugin = {
       }\n${propsCompileResult}`;
 
       const propsDest = replaceExt(pageProps.outputPath, "_props.js");
-      pagic.writeFiles[propsDest] = propsCompileResult;
+      gagic.writeFiles[propsDest] = propsCompileResult;
     }
 
-    if (pagic.rebuilding) {
-      for (const layoutPath of pagic.layoutPaths) {
+    if (gagic.rebuilding) {
+      for (const layoutPath of gagic.layoutPaths) {
         const layoutDest = replaceExt(layoutPath, ".js");
-        const compileSrc = path.resolve(pagic.config.srcDir, layoutPath);
+        const compileSrc = path.resolve(gagic.config.srcDir, layoutPath);
         if (await fs.exists(compileSrc)) {
-          pagic.writeFiles[layoutDest] = await compileFile(compileSrc);
+          gagic.writeFiles[layoutDest] = await compileFile(compileSrc);
         } else {
-          pagic.writeFiles[layoutDest] = await compilePagicFile(
-            `src/themes/${pagic.config.theme}/${layoutPath}`,
+          gagic.writeFiles[layoutDest] = await compileGagicFile(
+            `src/themes/${gagic.config.theme}/${layoutPath}`,
           );
         }
       }
 
-      pagic.writeFiles["pagic.config.js"] = await compileFile(
-        pagic.pagicConfigPath,
+      gagic.writeFiles["gagic.config.js"] = await compileFile(
+        gagic.gagicConfigPath,
       );
 
-      const scriptIndexDest = path.resolve(pagic.config.outDir, "index.js");
-      await copyPagicFile("src/plugins/script_index.js", scriptIndexDest);
+      const scriptIndexDest = path.resolve(gagic.config.outDir, "index.js");
+      await copyGagicFile("src/plugins/script_index.js", scriptIndexDest);
     }
   },
 };

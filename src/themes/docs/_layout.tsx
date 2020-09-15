@@ -1,6 +1,6 @@
 import { React } from "../../../deps.ts";
 
-import { PagicLayout } from "../../Pagic.ts";
+import { GagicLayout } from "../../Gagic.ts";
 import Head from "./_head.tsx";
 import Header from "./_header.tsx";
 import Sidebar from "./_sidebar.tsx";
@@ -9,7 +9,7 @@ import Tools from "./_tools.tsx";
 import Footer from "./_footer.tsx";
 import { classnames } from "./_utils.tsx";
 
-const Layout: PagicLayout = (props) => {
+const Layout: GagicLayout = (props) => {
   const [isDark, setIsDark] = React.useState(
     // @ts-ignore
     window.Deno

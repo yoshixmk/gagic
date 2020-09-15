@@ -1,7 +1,7 @@
 import { fs, path } from "../../deps.ts";
 
 import { logger } from "./common.ts";
-import { pagicRootPath } from "./filepath.ts";
+import { gagicRootPath } from "./filepath.ts";
 
 export async function ensureDirAndWriteFileStr(
   filename: string,
@@ -20,9 +20,9 @@ export async function ensureDirAndCopy(
   await fs.ensureDir(path.dirname(dest));
   await fs.copy(src, dest, options);
 }
-export async function copyPagicFile(pathToPagicRoot: string, dest: string) {
-  logger.success("Copy pagic file", pathToPagicRoot);
-  const src = `${pagicRootPath}/${pathToPagicRoot}`;
+export async function copyGagicFile(pathToGagicRoot: string, dest: string) {
+  logger.success("Copy gagic file", pathToGagicRoot);
+  const src = `${gagicRootPath}/${pathToGagicRoot}`;
   if (import.meta.url.startsWith("file://")) {
     await ensureDirAndCopy(src, dest, { overwrite: true });
   } else {

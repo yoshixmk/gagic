@@ -1,7 +1,7 @@
 import i18next from "https://deno.land/x/i18next@v19.6.3/index.js";
-import { Trans } from "https://deno.land/x/pagic@v0.9.0/src/vendors/react-i18next/Trans.js";
+import { Trans } from "https://deno.land/x/gagic@v0.9.0/src/vendors/react-i18next/Trans.js";
 
-import pagicConfig from "./pagic.config.js";
+import gagicConfig from "./gagic.config.js";
 
 (async () => {
   await i18next.init(
@@ -9,7 +9,7 @@ import pagicConfig from "./pagic.config.js";
       interpolation: {
         escapeValue: false, // not needed for react as it escapes by default
       },
-      ...pagicConfig.i18n,
+      ...gagicConfig.i18n,
     },
     () => {},
   );
