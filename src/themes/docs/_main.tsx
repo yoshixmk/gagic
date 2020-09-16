@@ -1,7 +1,7 @@
 import { React } from "../../../deps.ts";
 import throttle from "https://dev.jspm.io/lodash@4.17.15/throttle";
 
-import { GagicLayout } from "../../Gagic.ts";
+import type { GagicLayout } from "../../Gagic.ts";
 import Loading from "./_loading.tsx";
 
 const Main: GagicLayout = (props) => {
@@ -22,8 +22,8 @@ const Main: GagicLayout = (props) => {
         const bounding = document.getElementById(a.hash.slice(1))
           .getBoundingClientRect();
         const belowTop = bounding.y > 64;
-        // @ts-ignore
         const aboveBottom =
+          // @ts-ignore
           bounding.y + bounding.height + 16 <= window.innerHeight;
         if ((belowTop && aboveBottom) || (!belowTop && !aboveBottom)) {
           anchorPositionMap.set(a, "inViewport");

@@ -1,6 +1,6 @@
 import { React } from "../../../deps.ts";
 
-import { GagicLayout } from "../../Gagic.ts";
+import type { GagicLayout } from "../../Gagic.ts";
 import Popover from "./_popover.tsx";
 
 const Header: GagicLayout<{

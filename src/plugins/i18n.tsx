@@ -5,7 +5,7 @@ import i18next from "https://deno.land/x/i18next@v19.6.3/index.js";
 import { Trans as TransComponent } from "../vendors/react-i18next/Trans.js";
 
 import { path, React } from "../../deps.ts";
-import { GagicPlugin, GagicConfig } from "../Gagic.ts";
+import type { GagicPlugin, GagicConfig } from "../Gagic.ts";
 import { copyGagicFile } from "../utils/mod.ts";
 
 let gagicConfig: GagicConfig;

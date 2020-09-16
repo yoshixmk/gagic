@@ -2,7 +2,7 @@ import { fs, path, ReactDOMServer } from "../../deps.ts";
 import ReactHelmet from "https://dev.jspm.io/react-helmet@6.1.0";
 const { Helmet } = ReactHelmet;
 
-import { GagicPlugin } from "../Gagic.ts";
+import type { GagicPlugin } from "../Gagic.ts";
 import {
   ensureDirAndWriteFileStr,
   ensureDirAndCopy,

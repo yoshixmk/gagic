@@ -1,6 +1,6 @@
 import { React } from "../../deps.ts";
 
-import { GagicPlugin } from "../Gagic.ts";
+import type { GagicPlugin } from "../Gagic.ts";
 import Gitalk from "./gitalk_component.tsx";
 import { compileGagicFile } from "../utils/mod.ts";
 

@@ -1,6 +1,6 @@
 import { React } from "../../../deps.ts";
 
-import { GagicLayout } from "../../Gagic.ts";
+import type { GagicLayout } from "../../Gagic.ts";
 import Head from "./_head.tsx";
 import Header from "./_header.tsx";
 import Sidebar from "./_sidebar.tsx";
@@ -11,10 +11,8 @@ import { classnames } from "./_utils.tsx";
 
 const Layout: GagicLayout = (props) => {
   const [isDark, setIsDark] = React.useState(
-    // @ts-ignore
-    window.Deno
-      ? false
-      : document.documentElement.classList.contains("is_dark"),
+    window.Deno ? false : // @ts-ignore
+      document.documentElement.classList.contains("is_dark"),
   );
   return (
     <html className={classnames({ is_dark: isDark })}>

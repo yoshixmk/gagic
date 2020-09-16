@@ -1,6 +1,6 @@
 import { React } from "../../../deps.ts";
 
-import { GagicLayout } from "../../Gagic.ts";
+import type { GagicLayout } from "../../Gagic.ts";
 
 const Tools: GagicLayout = ({ config, pagePath }) => {
   if (!config.tools) {

@@ -2,7 +2,7 @@ import { React } from "../../../deps.ts";
 import ReactHelmet from "https://dev.jspm.io/react-helmet@6.1.0";
 const { Helmet } = ReactHelmet;
 
-import { GagicLayout } from "../../Gagic.ts";
+import type { GagicLayout } from "../../Gagic.ts";
 
 const Head: GagicLayout<{
   isDark: boolean;

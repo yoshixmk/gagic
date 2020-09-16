@@ -1,7 +1,7 @@
 import { React } from "../../../deps.ts";
 
-import { GagicLayout, PageProps } from "../../Gagic.ts";
-import { PagePropsSidebar } from "../../plugins/sidebar.tsx";
+import type { GagicLayout, PageProps } from "../../Gagic.ts";
+import type { PagePropsSidebar } from "../../plugins/sidebar.tsx";
 import { classnames } from "./_utils.tsx";
 
 const Sidebar: GagicLayout = ({ config, outputPath, sidebar }) => {

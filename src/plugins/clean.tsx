@@ -1,6 +1,6 @@
 import { colors, fs } from "../../deps.ts";
 
-import { GagicPlugin } from "../Gagic.ts";
+import type { GagicPlugin } from "../Gagic.ts";
 import { logger } from "../utils/mod.ts";
 
 /** Clean outDir */
