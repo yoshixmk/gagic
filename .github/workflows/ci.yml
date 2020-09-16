@@ -20,14 +20,3 @@ jobs:
 
       - name: Run tests
         run: deno test --unstable --allow-read --allow-write --allow-net src
-
-      - name: Deploy gh-pages
-        if: |
-          matrix.os == 'ubuntu-latest' &&
-          github.event_name == 'push' &&
-          github.ref == 'refs/heads/master'
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-          cname: gagic.org
