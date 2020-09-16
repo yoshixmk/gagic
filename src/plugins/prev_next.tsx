@@ -1,4 +1,4 @@
-import { GagicPlugin } from "../Gagic.ts";
+import type { GagicPlugin } from "../Gagic.ts";
 import { PagePropsSidebar } from "./sidebar.tsx";
 import { pick, depthFirstTraversal } from "../utils/mod.ts";
 

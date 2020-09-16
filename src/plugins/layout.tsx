@@ -1,6 +1,6 @@
 import { fs, path, React } from "../../deps.ts";
 
-import { GagicPlugin } from "../Gagic.ts";
+import type { GagicPlugin } from "../Gagic.ts";
 import { importDefault, importTheme } from "../utils/mod.ts";
 
 const layout: GagicPlugin = {
