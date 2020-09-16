@@ -21,9 +21,6 @@ jobs:
       - name: Run tests
         run: deno test --unstable --allow-read --allow-write --allow-net src
 
-      - name: Build gh-pages
-        run: deno run --unstable --allow-read --allow-write --allow-net mod.ts build
-
       - name: Deploy gh-pages
         if: |
           matrix.os == 'ubuntu-latest' &&

@@ -96,9 +96,3 @@ Deno.test("[sortByInsert] insert to an inserted item", () => {
     ],
   );
 });
-Deno.test("[getGagicConfigPath]", async () => {
-  asserts.assertEquals(
-    await getGagicConfigPath(),
-    path.resolve("gagic.config.tsx"),
-  );
-});
