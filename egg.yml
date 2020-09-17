@@ -5,7 +5,4 @@ stable: true
 entry: ./mod.ts
 unlisted: false
 fmt: true
-checkTests: false
-checkInstallation: false
-checkAll: false
 repository: https://github.com/yoshixmk/gagic

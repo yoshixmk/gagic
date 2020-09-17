@@ -37,7 +37,7 @@ Deno.test("[compileFile] should read input file and compile it", async () => {
   );
   asserts.assertEquals(
     output,
-    `ReactDOM.render(React.createElement("div", null), document.getElementById('foo'));\n`,
+    `ReactDOM.render(React.createElement("div", null), document.getElementById("foo"));\n`,
   );
 });
 Deno.test("[compileGagicFile] should compile the input gagic file", async () => {
@@ -46,6 +46,6 @@ Deno.test("[compileGagicFile] should compile the input gagic file", async () => 
   );
   asserts.assertEquals(
     output,
-    `ReactDOM.render(React.createElement("div", null), document.getElementById('foo'));\n`,
+    `ReactDOM.render(React.createElement("div", null), document.getElementById("foo"));\n`,
   );
 });
