@@ -6,8 +6,3 @@ entry: ./mod.ts
 unlisted: false
 fmt: true
 repository: https://github.com/yoshixmk/gagic
-files:
-  - ./*.(js|mjs|jsx|ts|tsx)
-  - ./src/**/*.(js|mjs|jsx|ts|tsx)
-  - ./test/**/*.(js|mjs|jsx|ts|tsx)
-  - README.md
