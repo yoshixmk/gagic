@@ -1,0 +1,13 @@
+name: gagic
+description: The easiest way to generate static html page from markdown, built with Deno 🦕
+# version: <Selected version on workflow>
+stable: true
+entry: ./mod.ts
+unlisted: false
+fmt: true
+repository: https://github.com/yoshixmk/gagic
+files:
+  - ./*.(js|mjs|jsx|ts|tsx)
+  - ./src/**/*.(js|mjs|jsx|ts|tsx)
+  - ./test/**/*.(js|mjs|jsx|ts|tsx)
+  - README.md
