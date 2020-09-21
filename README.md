@@ -1,7 +1,8 @@
 # Gagic
 
 [![(Deno)](https://img.shields.io/badge/deno-^1.4.0-green.svg?style=flat-square&logo=deno)](https://deno.land)
-[![ci](https://github.com/yoshixmk/gagic/workflows/ci/badge.svg)](https://github.com/yoshixmk/gagic/actions)
+[![Test](https://github.com/yoshixmk/gagic/workflows/Test/badge.svg)](https://github.com/yoshixmk/gagic/actions)
+[![Lint](https://github.com/yoshixmk/gagic/workflows/Lint/badge.svg)](https://github.com/yoshixmk/gagic/actions)
 [![nest badge](https://nest.land/badge.svg)](https://nest.land/package/gagic)
 
 The easiest way to generate static html page from markdown, built with Deno 🦕
