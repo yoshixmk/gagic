@@ -22,11 +22,11 @@ const script: GagicPlugin = {
         <>
           <script
             crossOrigin="anonymous"
-            src="https://unpkg.com/react@16.13.1/umd/react.production.min.js"
+            src="https://unpkg.com/react@16.14.0/umd/react.production.min.js"
           />
           <script
             crossOrigin="anonymous"
-            src="https://unpkg.com/react-dom@16.13.1/umd/react-dom.production.min.js"
+            src="https://unpkg.com/react-dom@16.14.0/umd/react-dom.production.min.js"
           />
           <script type="module" src={`${gagic.config.root}index.js`} />
         </>
