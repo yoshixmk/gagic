@@ -1,4 +1,4 @@
-import { fs, path, colors } from "../../deps.ts";
+import { colors, fs, path } from "../../deps.ts";
 
 // #region Common types
 export type AnyFunction = (...args: any[]) => any;

@@ -1,5 +1,5 @@
 import type { GagicPlugin } from "../Gagic.ts";
-import { getOutputPath, findNearestLayoutPath } from "../utils/mod.ts";
+import { findNearestLayoutPath, getOutputPath } from "../utils/mod.ts";
 
 /** Init gagic.pagePropsMap */
 const init: GagicPlugin = {

@@ -1,14 +1,14 @@
 import { fs, path, React } from "../../deps.ts";
 
 import {
-  copyGagicFile,
   compile,
   compileFile,
   compileGagicFile,
+  copyGagicFile,
+  pick,
   reactElementToJSXString,
   replaceExt,
   underlineToPascal,
-  pick,
 } from "../utils/mod.ts";
 import Gagic, { GagicPlugin } from "../Gagic.ts";
 

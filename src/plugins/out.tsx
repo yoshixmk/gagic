@@ -4,10 +4,10 @@ const { Helmet } = ReactHelmet;
 
 import type { GagicPlugin } from "../Gagic.ts";
 import {
-  ensureDirAndWriteFileStr,
-  ensureDirAndCopy,
   copyGagicFile,
   download,
+  ensureDirAndCopy,
+  ensureDirAndWriteFileStr,
 } from "../utils/mod.ts";
 
 const out: GagicPlugin = {

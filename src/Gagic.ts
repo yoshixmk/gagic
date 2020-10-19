@@ -1,20 +1,20 @@
-import { fs, path, colors, React } from "../deps.ts";
+import { colors, fs, path, React } from "../deps.ts";
 import { Application, send } from "https://deno.land/x/oak@v6.2.0/mod.ts";
 
 import {
-  pick,
-  unique,
-  sortByInsert,
-  importDefault,
-  logger,
-  walk,
   getGagicConfigPath,
+  importDefault,
   importPlugin,
   importTheme,
+  logger,
+  pick,
+  sortByInsert,
+  unique,
+  walk,
 } from "./utils/mod.ts";
 import type {
-  PagePropsSidebar,
   GagicConfigSidebar,
+  PagePropsSidebar,
 } from "./plugins/sidebar.tsx";
 
 // #region types

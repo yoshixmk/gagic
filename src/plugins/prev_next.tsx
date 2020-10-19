@@ -1,6 +1,6 @@
 import type { GagicPlugin } from "../Gagic.ts";
 import { PagePropsSidebar } from "./sidebar.tsx";
-import { pick, depthFirstTraversal } from "../utils/mod.ts";
+import { depthFirstTraversal, pick } from "../utils/mod.ts";
 
 const prev_next: GagicPlugin = {
   name: "prev_next",

@@ -3,10 +3,10 @@ import { asserts, path } from "../../deps.ts";
 import {
   import_,
   importDefault,
-  importPlugin,
-  importTheme,
   importGagicMod,
   importGagicModDefault,
+  importPlugin,
+  importTheme,
 } from "./import.ts";
 
 Deno.test("[import_]", async () => {

@@ -1,13 +1,13 @@
 import { asserts, path } from "../../deps.ts";
 
 import {
-  gagicRootPath,
-  pascalToUnderline,
-  underlineToPascal,
-  replaceExt,
-  getOutputPath,
-  replaceLink,
   findNearestLayoutPath,
+  gagicRootPath,
+  getOutputPath,
+  pascalToUnderline,
+  replaceExt,
+  replaceLink,
+  underlineToPascal,
   walk,
 } from "./filepath.ts";
 import Gagic from "../Gagic.ts";

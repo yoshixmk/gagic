@@ -18,16 +18,16 @@
 export as namespace ReactDOM;
 
 import {
-  ReactInstance,
+  CElement,
   Component,
   ComponentState,
-  ReactElement,
-  SFCElement,
-  CElement,
   DOMAttributes,
   DOMElement,
+  ReactElement,
+  ReactInstance,
   ReactNode,
   ReactPortal,
+  SFCElement,
 } from "../../react/v16.14.0/react.d.ts";
 
 export function findDOMNode(

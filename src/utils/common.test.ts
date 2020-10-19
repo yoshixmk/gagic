@@ -1,13 +1,13 @@
 import { asserts, path } from "../../deps.ts";
 
 import {
+  depthFirstTraversal,
+  getGagicConfigPath,
+  omit,
+  pick,
+  sortByInsert,
   Tree,
   unique,
-  pick,
-  omit,
-  depthFirstTraversal,
-  sortByInsert,
-  getGagicConfigPath,
 } from "./common.ts";
 
 Deno.test("[unique]", () => {
