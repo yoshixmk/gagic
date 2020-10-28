@@ -1,10 +1,10 @@
 import { path, React } from "../../deps.ts";
 import fm from "https://dev.jspm.io/front-matter@4.0.2";
-import MarkdownIt from "https://dev.jspm.io/markdown-it@11.0.0";
+import MarkdownIt from "https://dev.jspm.io/markdown-it@12.0.2";
 import markdownItTitle from "https://dev.jspm.io/markdown-it-title@3.0.0";
-import markdownItAnchor from "https://dev.jspm.io/markdown-it-anchor@5.3.0";
+import markdownItAnchor from "https://dev.jspm.io/markdown-it-anchor@6.0.0";
 import markdownitTocDoneRight from "https://dev.jspm.io/markdown-it-toc-done-right@4.1.0";
-import markdownitReplaceLink from "https://dev.jspm.io/markdown-it-replace-link@1.0.1";
+import markdownitReplaceLink from "https://dev.jspm.io/markdown-it-replace-link@1.1.0";
 import markdownitHighlightLines from "../vendors/markdown-it-highlight-lines/index.js";
 
 import Prism from "../vendors/prism/mod.ts";
@@ -16,7 +16,7 @@ import { replaceLink } from "../utils/mod.ts";
  */
 let tocHTML = "";
 
-const mdRenderer = new MarkdownIt({
+const mdRenderer = new (MarkdownIt as any)({
   html: true,
   linkify: true,
   highlight: (str: string, lang = "autoit") => {
@@ -70,7 +70,7 @@ const md: GagicPlugin = {
       let content = await Deno.readTextFile(
         path.resolve(gagic.config.srcDir, pagePath),
       );
-      const fmResult = fm(content);
+      const fmResult = (fm as any)(content);
       const frontMatter = fmResult.attributes;
       content = fmResult.body;
 
