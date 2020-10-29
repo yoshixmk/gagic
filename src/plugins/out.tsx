@@ -1,5 +1,5 @@
 import { fs, path, ReactDOMServer } from "../../deps.ts";
-import ReactHelmet from "../../deps.ts";
+import { ReactHelmet } from "../../deps.ts";
 
 import type { GagicPlugin } from "../Gagic.ts";
 import {
