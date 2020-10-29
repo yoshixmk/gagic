@@ -1,5 +1,5 @@
 import { colors, fs, path, React } from "../deps.ts";
-import { Application, send } from "https://deno.land/x/oak@v6.2.0/mod.ts";
+import { Application, send } from "https://deno.land/x/oak@v6.3.1/mod.ts";
 
 import {
   getGagicConfigPath,
