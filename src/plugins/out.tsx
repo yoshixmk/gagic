@@ -1,5 +1,5 @@
 import { fs, path, ReactDOMServer } from "../../deps.ts";
-import { ReactHelmet } from "../../deps.ts";
+import { Helmet } from "../../deps.ts";
 
 import type { GagicPlugin } from "../Gagic.ts";
 import {
@@ -21,7 +21,7 @@ const out: GagicPlugin = {
       const fullFilePath = path.resolve(gagic.config.outDir, outputPath);
       (window as any).pageProps = pageProps;
       let htmlString = ReactDOMServer.renderToString(content);
-      const helmet = ReactHelmet.Helmet.renderStatic();
+      const helmet = Helmet.renderStatic();
       const helmetString = [
         "meta",
         "title",
@@ -31,7 +31,7 @@ const out: GagicPlugin = {
         "noscript",
         "script",
       ]
-        .map((key) => helmet[key].toString())
+        .map((key) => (helmet as any)[key].toString())
         .filter((str) => str !== "")
         .join("\n");
 

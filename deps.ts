@@ -10,9 +10,9 @@ import ReactDOM from "https://dev.jspm.io/react-dom@16.14.0";
 // @deno-types="./src/types/react-dom/v16.14.0/server.d.ts"
 import ReactDOMServer from "https://dev.jspm.io/react-dom@16.14.0/server.js";
 // @deno-types="./src/types/react-helmet/v6.1.0/react-helmet.d.ts"
-import ReactHelmet from "https://esm.sh/react-helmet@6.1.0";
+import Helmet from "https://esm.sh/react-helmet@6.1.0";
 
 (window as any).React = React;
 (window as any).ReactDOM = ReactDOM;
 
-export { React, ReactDOM, ReactDOMServer, ReactHelmet };
+export { Helmet, React, ReactDOM, ReactDOMServer };

@@ -1,5 +1,5 @@
 import { React } from "../../../deps.ts";
-import { ReactHelmet } from "../../../deps.ts";
+import { Helmet } from "../../../deps.ts";
 
 import type { GagicLayout } from "../../Gagic.ts";
 
@@ -15,7 +15,7 @@ const Head: GagicLayout<{
   `;
   return (
     <head>
-      <ReactHelmet.Helmet>
+      <Helmet>
         <meta charSet="utf-8" />
         <meta httpEquiv="x-ua-compatible" content="ie=edge" />
         <title>
@@ -38,7 +38,7 @@ const Head: GagicLayout<{
         />
         <link rel="stylesheet" href={`${config.root}assets/index.css`} />
         <script>{scriptSetIsDark}</script>
-      </ReactHelmet.Helmet>
+      </Helmet>
       {head}
     </head>
   );
