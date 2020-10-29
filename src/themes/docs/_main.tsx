@@ -1,5 +1,6 @@
 import { React } from "../../../deps.ts";
-import throttle from "https://dev.jspm.io/lodash@4.17.15/throttle";
+
+import throttle from "https://dev.jspm.io/lodash@4.17.20/throttle";
 
 import type { GagicLayout } from "../../Gagic.ts";
 import Loading from "./_loading.tsx";
@@ -52,7 +53,7 @@ const Main: GagicLayout = (props) => {
         activeAnchor.classList.add("active");
       }
     };
-    window.addEventListener("scroll", throttle(scrollHandler, 100));
+    window.addEventListener("scroll", (throttle as any)(scrollHandler, 100));
     scrollHandler();
   }, []);
   return (
