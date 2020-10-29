@@ -1,6 +1,5 @@
 import { fs, path, ReactDOMServer } from "../../deps.ts";
 import ReactHelmet from "https://dev.jspm.io/react-helmet@6.1.0";
-const { Helmet } = ReactHelmet;
 
 import type { GagicPlugin } from "../Gagic.ts";
 import {
@@ -21,8 +20,8 @@ const out: GagicPlugin = {
       }
       const fullFilePath = path.resolve(gagic.config.outDir, outputPath);
       (window as any).pageProps = pageProps;
-      let htmlString = ReactDOMServer.renderToString(content);
-      const helmet = Helmet.renderStatic();
+      let htmlString = (ReactDOMServer as any).renderToString(content);
+      const helmet = (ReactHelmet as any).renderStatic();
       const helmetString = [
         "meta",
         "title",
